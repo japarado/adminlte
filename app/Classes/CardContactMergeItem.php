@@ -18,11 +18,11 @@ class CardContactMergeItem
 		$this->phone_number = $phone_number;
 	}
 
-	public string $abbott_code;
-	public string $card_code;
-	public string $first_name;
-	public string $last_name;
-	public string $phone_number;
+	public ?string $abbott_code;
+	public ?string $card_code;
+	public ?string $first_name;
+	public ?string $last_name;
+	public ?string $phone_number;
 
 	/* public function getAbbottCode(): string */
 	/* { */
