@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MergeCards;
-use App\Imports\CardImport;
+use App\Http\Services\CardService;
+use App\Imports\CardMergeImport;
+use App\Imports\ContactMergeImport;
 use App\Models\AbbottCode;
-use App\Models\Batch;
 use App\Models\Card;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
-use Illuminate\Support\Str;
-
 class CardControllerJson extends Controller
 {
+    public function __construct()
+    {
+        $this->card_service = new CardService();
+    }
+
+    private CardService $card_service;
+
+
     public function index()
     {
         $data = [
@@ -28,28 +35,25 @@ class CardControllerJson extends Controller
         $cards_file = $request->file('cards');
         $contacts_file = $request->file('contacts');
 
-        $abbott_code = self::getAbbottCode($request);
+		$cards = Excel::toArray(new CardMergeImport, $cards_file);
+		$contacts = Excel::toArray(new ContactMergeImport, $contacts_file);
 
-        $batch = Batch::create([
-            'code' => Str::random(30),
-            'import_type' => "VOUCHER",
-            'user_id' => 2,
-        ]);
+        $merged = $this->card_service->merge($cards_file, $contacts_file);
 
-        $cards = Excel::toCollection(new CardImport($batch, $abbott_code), $cards_file);
-
-		dd($cards);
-
-        return response()->json(['cards' => $cards]) ;
+        return response()->json([
+            'merged' => $merged
+        ]) ;
     }
 
     private static function getAbbottCode(Request $request)
     {
         $abbott_code = null;
-        if ($request->input('abbott_code_id')) {
+		if ($request->input('abbott_code_id')) 
+		{
             $abbott_code = AbbottCode::find($request->input('abbott_code_id'));
-		}
-	   	else {
+		} 
+		else 
+		{
             $abbott_code = AbbottCode::first();
         }
         return $abbott_code;

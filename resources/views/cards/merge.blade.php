@@ -48,9 +48,28 @@
 			</div>
 		</div>
 	</div>
-@stop
 
-@section('plugins.Pace', true)
+	<div class="row">
+		<div class="col-12">
+			<div class="card card-info disabled">
+				<div class="card-header">
+					<h3 class="card-title">2. Review Merged Data</h3>
+				</div>
+
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<div id="js-merge-review-table" class="w-100"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-footer">
+				</div>
+			</div>
+		</div>
+	</div>
+@stop
 
 @section('js')
 	<script src="{{ asset('js/app.js') }}"></script>
