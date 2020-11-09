@@ -95,6 +95,7 @@ document.getElementById("js-merged-vouchers-cards-hidden").addEventListener('cha
 function handleUpdateMergeData(e)
 {
 	const mergeTableContainer = document.getElementById('js-merge-review-table')
+	mergeTableContainer.innerHTML = "";
 	const data = e.target.value;
 
 	const colHeaders = [

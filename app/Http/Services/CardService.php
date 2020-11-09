@@ -29,17 +29,17 @@ class CardService {
 			{
 				$card = $cards[$ctr];
 
-				$merge_item->abbott_code = $card[0];
-				$merge_item->card_code = $card[1];
+				$merge_item->abbott_code = array_key_exists(0, $card) ? $card[0] : "";
+				$merge_item->card_code = array_key_exists(1, $card) ? $card[1] : "";
 			}
 
 			if(array_key_exists($ctr, $contacts))
 			{
 				$contact = $contacts[$ctr];
 
-				$merge_item->last_name = $contact[0];
-				$merge_item->first_name = $contact[1];
-				$merge_item->phone_number = $contact[2];
+				$merge_item->last_name = array_key_exists(0, $contact) ? $contact[0] : "";
+				$merge_item->first_name = array_key_exists(1, $contact) ? $contact[1] : "";
+				$merge_item->phone_number = array_key_exists(2, $contact) ? $contact[2] : "";
 			}
 
 			array_push($return_value, $merge_item);
