@@ -20328,10 +20328,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/.pnpm/axios@0.19.2/node_modules/axios/index.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/.pnpm/axios@0.19.2/node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
-var apiUrl = "https://adminlte.apc" + "/api";
+var apiUrl = process.env.MIX_APP_URL + "/api";
 var instance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
   baseURL: apiUrl,
   timeout: 1000
@@ -20355,6 +20355,7 @@ instance.interceptors.response.use(function (response) {
 });
 instance.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /* harmony default export */ __webpack_exports__["default"] = (instance);
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/.pnpm/process@0.11.10/node_modules/process/browser.js */ "./node_modules/.pnpm/process@0.11.10/node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -20386,7 +20387,7 @@ function elementCreateFormError(message) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/pam/Documents/Programming/php/adminlte/resources/js/pages/cards/merge */"./resources/js/pages/cards/merge.js");
+module.exports = __webpack_require__(/*! /home/pam/repos/emissary/resources/js/pages/cards/merge */"./resources/js/pages/cards/merge.js");
 
 
 /***/ })
