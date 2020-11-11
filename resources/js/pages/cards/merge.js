@@ -125,6 +125,7 @@ function handleUpdateMergeData(e)
 		rowHeaders: true,
 		colHeaders: colHeaders,
 		columns: columns,
+		height: "20rem",
 		licenseKey: 'non-commercial-and-evaluation'
 	})
 }

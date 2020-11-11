@@ -35,9 +35,6 @@ class CardControllerJson extends Controller
         $cards_file = $request->file('cards');
         $contacts_file = $request->file('contacts');
 
-		$cards = Excel::toArray(new CardMergeImport, $cards_file);
-		$contacts = Excel::toArray(new ContactMergeImport, $contacts_file);
-
         $merged = $this->card_service->merge($cards_file, $contacts_file);
 
         return response()->json([
