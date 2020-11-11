@@ -29,11 +29,19 @@ class MergeCards extends FormRequest
         ];
     }
 
-	public function attributes()
+	public function attributes(): array
 	{
 		return [
 			'cards' => 'Cards',
 			'contacts' => 'Contacts',
+		];
+	}
+
+	public function messages(): array
+	{
+		return [
+			'cards.required' => 'The Cards file is required',
+			'contacts.required' => 'The Contacts file is required',
 		];
 	}
 }

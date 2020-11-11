@@ -1,6 +1,7 @@
 import axios from "../../services/instance";
 import {elementCreateFormError} from "../../utils";
 import HandsonTable from "handsontable";
+import Swal from "sweetalert2";
 
 import {cardIndex, cardMerge} from "../../services/index";
 import {forEach} from "lodash";
@@ -12,9 +13,8 @@ button.addEventListener("click", handleSubmitMerge);
 async function handleSubmitMerge(e)
 {
 	e.preventDefault();
-
 	domClearCardsErrors();
-	domClearContactsErrors();
+	domClearMergedData();
 
 	const cards = document.getElementById("js-cards").files[0];
 	const contacts = document.getElementById("js-contacts").files[0];
@@ -24,61 +24,53 @@ async function handleSubmitMerge(e)
 		const response = await cardMerge(cards, contacts);
 		const merged = response.data.merged;
 		domSetMergedData(JSON.stringify(merged));
+		Swal.fire({
+			title: "Merging Success",
+			text: "Please refer to the table in Step 2 to review your imported data",
+			icon: "success"
+		});
 	}
 	catch(error)
 	{
-		console.log(error);
-		const response = error.response;
-		// if(response.data.errors)
-		if(response.data.hasOwnProperty("errors"))
+		const data = error.response.data;
+		if(data.hasOwnProperty("errors"))
 		{
-			const errors = response.data.errors;
-			if(errors.hasOwnProperty('cards'))
+			const errors = data.errors;
+			let errorList = [];
+			if(errors.hasOwnProperty("cards"))
 			{
-				setCardsErrors(errors.cards)
+				errorList = [...errorList, ...errors.cards];
 			}
-			if(errors.hasOwnProperty('contacts'))
+			if(errors.hasOwnProperty("contacts"))
 			{
-				setContactsErrors(errors.contacts)
+				errorList = [...errorList, ...errors.contacts];
 			}
+			domSetFilesErrors(errorList);
+			triggerErrorModal();
 		}
 	}
 }
 
-function setCardsErrors(errors)
+function triggerErrorModal()
 {
-	document.getElementById("js-cards").classList.add("is-invalid");
-	errors.forEach(error => domAddCardsError(error))
+	const elementErrorList = document.getElementById("js-import-errors").cloneNode(true);
+	Swal.fire({
+		title: "Given data is invalid",
+		html: elementErrorList,
+		icon: "error"
+	});
 }
 
-function setContactsErrors(errors)
+function domSetFilesErrors(errors)
 {
-	document.getElementById("js-contacts").classList.add("is-invalid");
-	errors.forEach(error => domAddContactsError(error))
-}
-
-function domAddCardsError(message)
-{
-	const errorElement = elementCreateFormError(message)
-	document.getElementById("js-cards-errors").insertAdjacentElement("afterend", errorElement)
-}
-
-function domAddContactsError(message)
-{
-	const errorElement = elementCreateFormError(message)
-	document.getElementById("js-contacts-errors").insertAdjacentElement('afterend', errorElement);
-}
-
-function domClearCardsErrors()
-{
-	document.getElementById("js-cards").classList.remove("is-invalid");
-	document.getElementById("js-cards-errors").innerHTML = "";
-}
-
-function domClearContactsErrors()
-{
-	document.getElementById("js-contacts").classList.remove("is-invalid");
-	document.getElementById("js-contacts-errors").innerHTML = "";
+	console.log(errors)
+	const domErrorList = document.getElementById("js-import-errors");
+	errors.forEach(errorMessage => {
+		const error = document.createElement("li");
+		error.className = "list-group-item list-group-item-danger";
+		error.innerText = errorMessage;
+		domErrorList.appendChild(error);
+	})
 }
 
 function domSetMergedData(mergedData)
@@ -86,6 +78,19 @@ function domSetMergedData(mergedData)
 	const field = document.getElementById("js-merged-vouchers-cards-hidden");
 	field.value = mergedData;
 	field.dispatchEvent(new Event('change'));
+}
+
+function domClearMergedData()
+{
+	const field = document.getElementById("js-merged-vouchers-cards-hidden");
+	field.value = JSON.stringify([]);
+	field.dispatchEvent(new Event('change'));
+}
+
+// Cleanup functions
+function domClearCardsErrors()
+{
+	document.getElementById("js-import-errors").innerHTML = "";
 }
 
 /******************************* END MERGE **********************/
@@ -107,11 +112,11 @@ function handleUpdateMergeData(e)
 	];
 
 	const columns = [
-		{data: 'abbott_code'},
-		{data: 'card_code'},
-		{data: 'first_name'},
-		{data: 'last_name'},
-		{data: 'phone_number'},
+		{data: 'abbott_code', editor: false},
+		{data: 'card_code', editor: false},
+		{data: 'first_name', editor: false},
+		{data: 'last_name', editor: false},
+		{data: 'phone_number', editor: false},
 	]
 
 	new HandsonTable(mergeTableContainer, {

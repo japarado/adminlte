@@ -21,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('cards', CardControllerJson::class, ['as' => 'api.cards'])->parameter('cards', 'id');
 
+
 Route::prefix('cards')->group(function() {
 	Route::post('merge', [CardControllerJson::class, "merge"])->name('api.cards.merge');
 });

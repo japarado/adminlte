@@ -13,6 +13,10 @@
 		<input type="hidden" name="merged-vouchers-cards" id="js-merged-vouchers-cards-hidden">
 	</div>
 
+	<div id="hidden-html" class="d-none">
+		<ul id="js-import-errors" class="list-group"></ul>
+	</div>
+
 	<div class="row">
 		<div class="col-12">
 			<div class="card card-primary">
@@ -23,18 +27,15 @@
 				<form action="{{ route('api.cards.merge') }}" role="form" method="post" id="js-merge-form">
 					<div class="card-body">
 						<div class="row">
-
 							<div class="col-md-7 col-xs-12">
 								<div class="form-group">
 									<label for="contacts">Contacts</label>
 									<input class="form-control-file" type="file" name="contacts" id="js-contacts" accept=".csv" required/>
-									<div id="js-contacts-errors"></div>
 								</div>
 
 								<div class="form-group">
 									<label for="cards">Cards</label>
 									<input class="form-control-file" type="file" name="cards" id="js-cards" accept=".csv" required/>
-									<div id="js-cards-errors"></div>
 								</div>
 							</div>
 						</div>

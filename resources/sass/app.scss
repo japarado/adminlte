@@ -8,4 +8,5 @@
 // AdminLTE
 @import '../../vendor/almasaeed2010/adminlte/dist/css/adminlte.css';
 
-@import "../../node_modules/handsontable/dist/handsontable.full.css";
+@import "~handsontable/dist/handsontable.full.min.css";
+@import "~sweetalert2/dist/sweetalert2.min.css";
