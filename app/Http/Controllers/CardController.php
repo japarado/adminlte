@@ -15,11 +15,11 @@ class CardController extends Controller
      */
     public function index()
     {
-		$context = [
-			'cards' => Card::paginate(config('constants.STANDARD_PAGE_SIZE'))
-		];
+        $context = [
+            'cards' => Card::paginate(config('constants.STANDARD_PAGE_SIZE'))
+        ];
 
-		return view('cards.index', $context);
+        return view('cards.index', $context);
     }
 
     /**
@@ -88,11 +88,8 @@ class CardController extends Controller
         //
     }
 
-	public function mergeView()
-	{
-		$data = [
-			'brands' => Brand::all()
-		];
-		return view('cards.merge', $data);
-	}
+    public function import()
+    {
+        return view('cards.import');
+    }
 }

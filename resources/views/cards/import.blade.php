@@ -21,7 +21,7 @@
 		<div class="col-12">
 			<div class="card card-primary">
 				<div class="card-header">
-					<h3 class="card-title">1. Merge Card and Contact Files</h3>
+					<h3 class="card-title">1. Import </h3>
 				</div>
 
 				<form action="{{ route('api.cards.merge') }}" role="form" method="post" id="js-merge-form">
@@ -31,11 +31,6 @@
 								<div class="form-group">
 									<label for="contacts">Contacts</label>
 									<input class="form-control-file" type="file" name="contacts" id="js-contacts" accept=".csv" required/>
-								</div>
-
-								<div class="form-group">
-									<label for="cards">Cards</label>
-									<input class="form-control-file" type="file" name="cards" id="js-cards" accept=".csv" required/>
 								</div>
 							</div>
 						</div>
