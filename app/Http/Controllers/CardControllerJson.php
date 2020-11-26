@@ -37,22 +37,12 @@ class CardControllerJson extends Controller
 
         $merged = $this->card_service->merge($cards_file, $contacts_file);
 
+		return response()->json([
+			'success' => true
+		]);
+
         return response()->json([
             'merged' => $merged
         ]) ;
-    }
-
-    private static function getAbbottCode(Request $request)
-    {
-        $abbott_code = null;
-		if ($request->input('abbott_code_id')) 
-		{
-            $abbott_code = AbbottCode::find($request->input('abbott_code_id'));
-		} 
-		else 
-		{
-            $abbott_code = AbbottCode::first();
-        }
-        return $abbott_code;
     }
 }
