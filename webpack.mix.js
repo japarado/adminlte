@@ -1,5 +1,5 @@
-const mix = require('laravel-mix');
-require('dotenv').config();
+const mix = require("laravel-mix");
+require("dotenv").config();
 
 /*
  |--------------------------------------------------------------------------
@@ -13,9 +13,11 @@ require('dotenv').config();
  */
 
 mix
-	.js('resources/js/app.js', 'public/js')
-	.sass('resources/sass/app.scss', 'public/css')
-	.js('resources/js/pages/cards/merge', 'public/js/pages/cards')
+	.js([
+		"resources/js/app.js",
+		"resources/js/pages/cards/merge.js"
+	], "public/js")
+	.sass("resources/sass/app.scss", "public/css")
 	.sourceMaps(true, "source-map")
 	.browserSync({
 		proxy: process.env.APP_URL,
