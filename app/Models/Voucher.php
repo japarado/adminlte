@@ -22,4 +22,9 @@ class Voucher extends Model
 	{
 		return $this->belongsTo(Batch::class);
 	}
+
+	public function smsLog()
+	{
+		return $this->morphOne(SmsLog::class, 'loggable');
+	}
 }

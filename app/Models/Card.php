@@ -34,4 +34,9 @@ class Card extends Model
 	{
 		return $this->belongsTo(AbbottCode::class);
 	}
+
+	public function smsLog()
+	{
+		return $this->morphOne(SmsLog::class, 'loggable');
+	}
 }

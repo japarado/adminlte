@@ -1,19 +1,20 @@
 import axios from "../../services/instance";
 import {elementCreateFormError} from "../../utils";
+import HandsonTable from "handsontable";
+import Swal from "sweetalert2";
 
 import {cardIndex, cardMerge} from "../../services/index";
 import {forEach} from "lodash";
 
+/******************************* MERGE **********************/
 const button = document.getElementById("js-merge-submit");
-
 button.addEventListener("click", handleSubmitMerge);
 
 async function handleSubmitMerge(e)
 {
 	e.preventDefault();
-
 	domClearCardsErrors();
-	domClearContactsErrors();
+	domClearMergedData();
 
 	const cards = document.getElementById("js-cards").files[0];
 	const contacts = document.getElementById("js-contacts").files[0];
@@ -21,59 +22,111 @@ async function handleSubmitMerge(e)
 	try 
 	{
 		const response = await cardMerge(cards, contacts);
-		console.log('success');
+		const merged = response.data.merged;
+		domSetMergedData(JSON.stringify(merged));
+		Swal.fire({
+			title: "Merging Success",
+			text: "Please refer to the table in Step 2 to review your imported data",
+			icon: "success"
+		});
 	}
-	catch(e)
+	catch(error)
 	{
-		const response = e.response;
-		// if(response.data.errors)
-		if(response.data.hasOwnProperty("errors"))
+		const data = error.response.data;
+		if(data.hasOwnProperty("errors"))
 		{
-			const errors = response.data.errors;
-			if(errors.hasOwnProperty('cards'))
+			const errors = data.errors;
+			let errorList = [];
+			if(errors.hasOwnProperty("cards"))
 			{
-				setCardsErrors(errors.cards)
+				errorList = [...errorList, ...errors.cards];
 			}
-			if(errors.hasOwnProperty('contacts'))
+			if(errors.hasOwnProperty("contacts"))
 			{
-				setContactsErrors(errors.contacts)
+				errorList = [...errorList, ...errors.contacts];
 			}
+			domSetFilesErrors(errorList);
+			triggerErrorModal();
 		}
 	}
 }
 
-function setCardsErrors(errors)
+function triggerErrorModal()
 {
-	document.getElementById("js-cards").classList.add("is-invalid");
-	errors.forEach(error => domAddCardsError(error))
+	const elementErrorList = document.getElementById("js-import-errors").cloneNode(true);
+	Swal.fire({
+		title: "Given data is invalid",
+		html: elementErrorList,
+		icon: "error"
+	});
 }
 
-function setContactsErrors(errors)
+function domSetFilesErrors(errors)
 {
-	document.getElementById("js-contacts").classList.add("is-invalid");
-	errors.forEach(error => domAddContactsError(error))
+	console.log(errors)
+	const domErrorList = document.getElementById("js-import-errors");
+	errors.forEach(errorMessage => {
+		const error = document.createElement("li");
+		error.className = "list-group-item list-group-item-danger";
+		error.innerText = errorMessage;
+		domErrorList.appendChild(error);
+	})
 }
 
-function domAddCardsError(message)
+function domSetMergedData(mergedData)
 {
-	const errorElement = elementCreateFormError(message)
-	document.getElementById("js-cards-errors").insertAdjacentElement("afterend", errorElement)
+	const field = document.getElementById("js-merged-vouchers-cards-hidden");
+	field.value = mergedData;
+	field.dispatchEvent(new Event('change'));
 }
 
-function domAddContactsError(message)
+function domClearMergedData()
 {
-	const errorElement = elementCreateFormError(message)
-	document.getElementById("js-contacts-errors").insertAdjacentElement('afterend', errorElement);
+	const field = document.getElementById("js-merged-vouchers-cards-hidden");
+	field.value = JSON.stringify([]);
+	field.dispatchEvent(new Event('change'));
 }
 
+// Cleanup functions
 function domClearCardsErrors()
 {
-	document.getElementById("js-cards").classList.add("is-invalid");
-	document.getElementById("js-cards-errors").innerHTML = "";
+	document.getElementById("js-import-errors").innerHTML = "";
 }
 
-function domClearContactsErrors()
+/******************************* END MERGE **********************/
+
+/******************************* REVIEW DATA **********************/
+document.getElementById("js-merged-vouchers-cards-hidden").addEventListener('change', handleUpdateMergeData);
+function handleUpdateMergeData(e)
 {
-	document.getElementById("js-contacts").classList.add("is-invalid");
-	document.getElementById("js-contacts-errors").innerHTML = "";
+	const mergeTableContainer = document.getElementById('js-merge-review-table')
+	mergeTableContainer.innerHTML = "";
+	const data = e.target.value;
+
+	const colHeaders = [
+		'Abbott Code',
+		'Card Code',
+		'First Name',
+		'Last Name',
+		'Phone Number'
+	];
+
+	const columns = [
+		{data: 'abbott_code', editor: false},
+		{data: 'card_code', editor: false},
+		{data: 'first_name', editor: false},
+		{data: 'last_name', editor: false},
+		{data: 'phone_number', editor: false},
+	]
+
+	new HandsonTable(mergeTableContainer, {
+		data: JSON.parse(data),
+		stretchH: 'all',
+		rowHeaders: true,
+		colHeaders: colHeaders,
+		columns: columns,
+		height: "20rem",
+		licenseKey: 'non-commercial-and-evaluation'
+	})
 }
+/******************************* END REVIEW DATA **********************/

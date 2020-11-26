@@ -4,7 +4,7 @@ dependencies:
   handsontable: 8.1.0
   icheck-bootstrap: 3.0.1
   overlayscrollbars: 1.13.0
-  sweetalert2: 10.9.0
+  sweetalert2: 10.9.1
 devDependencies:
   axios: 0.19.2
   bootstrap: 4.5.3_jquery@3.5.1+popper.js@1.16.1
@@ -12,9 +12,11 @@ devDependencies:
   browser-sync-webpack-plugin: 2.2.2_browser-sync@2.26.13
   cross-env: 7.0.2
   jquery: 3.5.1
+  laravel-echo: 1.9.0
   laravel-mix: 5.0.9_vue-template-compiler@2.6.12
   lodash: 4.17.20
   popper.js: 1.16.1
+  pusher-js: 7.0.1
   resolve-url-loader: 2.3.2
   sass: 1.29.0
   sass-loader: 8.0.2_sass@1.29.0
@@ -4665,6 +4667,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
+  /laravel-echo/1.9.0:
+    dev: true
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-+kw4mjwnMY2KXdKPpd5lHba8CNmYj9QzotK+E42Oz8B6flKViwkP+BQvahWTKxpkFwt5O2Iejk/etgQH6DhobQ==
   /laravel-mix/5.0.9_vue-template-compiler@2.6.12:
     dependencies:
       '@babel/core': 7.12.3
@@ -6261,6 +6269,12 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
+  /pusher-js/7.0.1:
+    dependencies:
+      tweetnacl: 1.0.3
+    dev: true
+    resolution:
+      integrity: sha512-ovdHvHiOwlTxlYFsArYBBqyfgil9iYgzfosAen8p31R9OUMj+nqJ5YzOPy3iY4eUZYb6DvsvKpebg0rL5AgVAw==
   /q/1.5.1:
     dev: true
     engines:
@@ -7351,10 +7365,10 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-yhy/sQYxR5BkC98CY7o31VGsg014AKLEPxdfhora76l36hD9Rdy5NZA/Ocn6yayNPgSamYdtX2rFJdcv07AYVw==
-  /sweetalert2/10.9.0:
+  /sweetalert2/10.9.1:
     dev: false
     resolution:
-      integrity: sha512-ijIYsQ4ybOVt49GbZd5FfLoA5A3CCtHK2iSJqnIbCGT/p9d0SwhjtHNO10w/VU8chzM+5hJQ2J6Z6eAEUYtXtw==
+      integrity: sha512-StLC1DI646iYUWH4I35HDytfLaz5lBAyvc0rGZ1yx+U8y4NJIcOKbgAFocgM+J4PElGCB6/EZMfTt4JhUAtF5g==
   /symbol-observable/1.0.1:
     dev: true
     engines:
@@ -7529,6 +7543,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY=
+  /tweetnacl/1.0.3:
+    dev: true
+    resolution:
+      integrity: sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
   /type-is/1.6.18:
     dependencies:
       media-typer: 0.3.0
@@ -8169,13 +8187,15 @@ specifiers:
   handsontable: ^8.1.0
   icheck-bootstrap: ^3.0.1
   jquery: ^3.5.1
+  laravel-echo: ^1.9.0
   laravel-mix: ^5.0.9
   lodash: ^4.17.20
   overlayscrollbars: ^1.13.0
   popper.js: ^1.16.1
+  pusher-js: ^7.0.1
   resolve-url-loader: ^2.3.2
   sass: ^1.29.0
   sass-loader: ^8.0.2
-  sweetalert2: ^10.9.0
+  sweetalert2: ^10.9.1
   vue: ^2.6.12
   vue-template-compiler: ^2.6.12
