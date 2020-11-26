@@ -13,10 +13,7 @@ require("dotenv").config();
  */
 
 mix
-	.js([
-		"resources/js/app.js",
-		"resources/js/pages/cards/merge.js"
-	], "public/js")
+	.js("resources/js/app", "public/js")
 	.sass("resources/sass/app.scss", "public/css")
 	.sourceMaps(true, "source-map")
 	.browserSync({
