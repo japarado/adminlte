@@ -14,13 +14,13 @@ class RejectedContactController extends Controller
      */
     public function index()
     {
-		$rejected_contacts = RejectedContact::paginate(config('constants.STANDARD_PAGE_SIZE'));
+		$rejected_contacts = RejectedContact::with('batch')->orderBy('id', 'desc')->paginate(config('constants.STANDARD_PAGE_SIZE'));
 
-		$context = [
-			'rejected_contacts' => $rejected_contacts
-		];
+        $context = [
+            'rejected_contacts' => $rejected_contacts
+        ];
 
-		return view('rejected-contacts.index', $context);
+        return view('rejected-contacts.index', $context);
     }
 
     /**
