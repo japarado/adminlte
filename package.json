@@ -34,6 +34,6 @@
         "handsontable": "^8.1.0",
         "icheck-bootstrap": "^3.0.1",
         "overlayscrollbars": "^1.13.0",
-        "sweetalert2": "^10.9.1"
+        "sweetalert2": "^10.10.4"
     }
 }
