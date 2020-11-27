@@ -4,7 +4,7 @@ const apiUrl = process.env.MIX_APP_URL + "/api";
 
 const instance = axios.create({
 	baseURL: apiUrl,
-	timeout: 1000,
+	timeout: 0,
 });
 
 instance.interceptors.request.use(function (config) {
