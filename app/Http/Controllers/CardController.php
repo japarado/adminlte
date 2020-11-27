@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Services\BrandService;
 use App\Models\Brand;
+use App\Models\BrandCode;
 use App\Models\Card;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CardController extends Controller
 {

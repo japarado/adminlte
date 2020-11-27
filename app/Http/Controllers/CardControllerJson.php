@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MergeCards;
+use App\Http\Requests\ImportCards;
 use App\Http\Services\CardService;
-use App\Imports\CardMergeImport;
-use App\Imports\ContactMergeImport;
-use App\Models\AbbottCode;
+use App\Imports\CardImport;
 use App\Models\Card;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -30,19 +28,13 @@ class CardControllerJson extends Controller
         return response()->json($data);
     }
 
-    public function merge(MergeCards $request)
+    public function import(ImportCards $request)
     {
-        $cards_file = $request->file('cards');
-        $contacts_file = $request->file('contacts');
+		$cards_file = $request->file('cards');
 
-        $merged = $this->card_service->merge($cards_file, $contacts_file);
-
+		Excel::import(new CardImport(), $cards_file);
 		return response()->json([
-			'success' => true
+			'merged' => []
 		]);
-
-        return response()->json([
-            'merged' => $merged
-        ]) ;
     }
 }
