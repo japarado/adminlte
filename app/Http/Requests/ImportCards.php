@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MergeCards extends FormRequest
+class ImportCards extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,6 @@ class MergeCards extends FormRequest
     {
         return [
 			'cards' => 'required|file|mimes:txt,csv',
-			'contacts' => 'required|file|mimes:txt,csv',
         ];
     }
 
@@ -33,7 +32,6 @@ class MergeCards extends FormRequest
 	{
 		return [
 			'cards' => 'Cards',
-			'contacts' => 'Contacts',
 		];
 	}
 
@@ -41,7 +39,6 @@ class MergeCards extends FormRequest
 	{
 		return [
 			'cards.required' => 'The Cards file is required',
-			'contacts.required' => 'The Contacts file is required',
 		];
 	}
 }
