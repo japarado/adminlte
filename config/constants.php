@@ -1,10 +1,5 @@
 <?php
 return [
-    'IMPORT_TYPES' => [
-        'CARD' => "CARD",
-        'VOUCHER' => "VOUCHER"
-    ],
-
     'BRANDS' => [
         [
             'name' => "ENSURE",
