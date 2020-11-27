@@ -1,3 +1,3 @@
-import {index as cardIndex, merge as cardMerge} from "./cardService";
+import {index as cardIndex, importCards as cardImport} from "./cardService";
 
-export {cardIndex, cardMerge};
+export {cardIndex, cardImport};

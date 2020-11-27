@@ -7,13 +7,12 @@ async function index()
 	return await axios.get(prefix);
 }
 
-async function merge(cards, contacts)
+async function importCards(cards)
 {
 	const formData = new FormData();
 	formData.append("cards", cards)
-	formData.append("contacts", contacts)
 	return await axios.post(
-		`${prefix}/merge`,
+		`${prefix}/import`,
 		formData,
 		{
 			headers: {'Content-Type': "multipart/form-data"}
@@ -21,4 +20,4 @@ async function merge(cards, contacts)
 	);
 }
 
-export {index, merge};
+export {index, importCards};
