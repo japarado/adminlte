@@ -19,8 +19,13 @@ async function parseCsvData(cards) {
 	);
 }
 
+async function assignBrands(cards)
+{
+	return await axios.post(`${prefix}/assign-brands`, {cards});
+}
+
 async function importCards(cards)
 {
 }
 
-export {index, parseCsvData, importCards};
+export {index, parseCsvData, assignBrands, importCards};
