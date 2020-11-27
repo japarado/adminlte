@@ -19,7 +19,7 @@ class CardController extends Controller
     public function index()
     {
         $context = [
-            'cards' => Card::paginate(config('constants.STANDARD_PAGE_SIZE'))
+			'cards' => Card::with('contact')->paginate(config('constants.STANDARD_PAGE_SIZE'))
         ];
 
         return view('cards.index', $context);
