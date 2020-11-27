@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ImportCards;
 use App\Http\Services\CardService;
 use App\Imports\CardImport;
+use App\Models\Batch;
 use App\Models\Card;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class CardControllerJson extends Controller
 {
@@ -17,7 +19,6 @@ class CardControllerJson extends Controller
     }
 
     private CardService $card_service;
-
 
     public function index()
     {
@@ -32,9 +33,19 @@ class CardControllerJson extends Controller
     {
 		$cards_file = $request->file('cards');
 
-		Excel::import(new CardImport(), $cards_file);
-		return response()->json([
-			'merged' => []
-		]);
+		try 
+		{
+			Excel::import(new CardImport(), $cards_file);
+			return response()->json([
+				'success' => true
+			]);
+		}
+		catch(ValidationException $e)
+		{
+			$failures = $e->failures();
+			return response()->json([
+				'failures' => $failures
+			]);
+		}
     }
 }

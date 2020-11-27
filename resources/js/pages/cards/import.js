@@ -15,7 +15,8 @@ async function handleImport()
 {
 	const cards = document.getElementById("js-cards").files[0];
 	const response = await cardImport(cards);
-	console.log(response);
+	if(response.hasOwnProperty('failures'));
+	console.table(response.failures)
 }
 
 /******************************* MERGE **********************/
