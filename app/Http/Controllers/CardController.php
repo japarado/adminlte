@@ -18,8 +18,11 @@ class CardController extends Controller
      */
     public function index()
     {
+		$cards = Card::with('contact')->paginate(config('constants.STANDARD_PAGE_SIZE'));
+		$brands = Brand::orderBy('name')->get();
         $context = [
-			'cards' => Card::with('contact')->paginate(config('constants.STANDARD_PAGE_SIZE'))
+			'cards' => $cards,
+			'brands' => $brands
         ];
 
         return view('cards.index', $context);
