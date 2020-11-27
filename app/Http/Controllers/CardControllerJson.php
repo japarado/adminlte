@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssignBrands;
 use App\Http\Requests\ImportCards;
 use App\Http\Requests\ParseCardCsv;
 use App\Http\Services\CardService;
 use App\Imports\CardImport;
 use App\Models\Batch;
+use App\Models\Brand;
 use App\Models\Card;
 use Error;
 use Illuminate\Http\Request;
@@ -52,6 +54,38 @@ class CardControllerJson extends Controller
             'cards' => $cards
         ]);
     }
+
+	public function assignBrands(AssignBrands $request)
+	{
+		$cards = $request->input('cards');
+
+		$brand_by_code = [];
+
+		$brands = Brand::with('brandCodes')->get();
+		foreach($brands as $brand)
+		{
+			foreach($brand->brandCodes as $brand_code)
+			{
+				$brand_by_code[$brand_code->code] = $brand->name;
+			}
+		}
+
+		$return_value = [];
+
+		foreach($cards as $card)
+		{
+			$brand_code = substr($card['card_code'], 0, 4);
+			if(array_key_exists($brand_code, $brand_by_code))
+			{
+				$card['brand'] = $brand_by_code[$brand_code];
+				array_push($return_value, $card);
+			}
+		}
+
+		return response()->json([
+			'cards' => $return_value
+		]);
+	}
 
     public function import(Request $request)
     {
