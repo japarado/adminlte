@@ -268,7 +268,12 @@ return [
             'text' => 'Contacts',
             'url'  => '/contacts',
             'icon' => 'fas fa-fw fa-user-tie',
-		]
+		],
+        [
+            'text' => 'Rejected Contacts',
+            'url'  => '/rejected-contacts',
+            'icon' => 'fas fa-fw fa-times-circle',
+        ],
     ],
 
     /*

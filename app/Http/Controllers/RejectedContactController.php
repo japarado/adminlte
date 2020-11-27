@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\RejectedContact;
 use Illuminate\Http\Request;
 
 class RejectedContactController extends Controller
@@ -13,7 +14,13 @@ class RejectedContactController extends Controller
      */
     public function index()
     {
-        //
+		$rejected_contacts = RejectedContact::paginate(config('constants.STANDARD_PAGE_SIZE'));
+
+		$context = [
+			'rejected_contacts' => $rejected_contacts
+		];
+
+		return view('rejected-contacts.index', $context);
     }
 
     /**
