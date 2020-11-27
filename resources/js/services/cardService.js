@@ -7,12 +7,11 @@ async function index()
 	return await axios.get(prefix);
 }
 
-async function importCards(cards)
-{
+async function parseCsvData(cards) {
 	const formData = new FormData();
 	formData.append("cards", cards)
 	return await axios.post(
-		`${prefix}/import`,
+		`${prefix}/parse-csv-data`,
 		formData,
 		{
 			headers: {'Content-Type': "multipart/form-data"}
@@ -20,4 +19,8 @@ async function importCards(cards)
 	);
 }
 
-export {index, importCards};
+async function importCards(cards)
+{
+}
+
+export {index, parseCsvData, importCards};
