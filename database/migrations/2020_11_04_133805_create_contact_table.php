@@ -18,6 +18,7 @@ class CreateContactTable extends Migration
 			$table->string('first_name');
 			$table->string('last_name');
 			$table->string('phone_number')->unique();
+			$table->string('email')->unique()->nullable();
 			$table->unsignedBigInteger('contactable_id');
 			$table->string('contactable_type');
             $table->timestamps();
