@@ -22,7 +22,6 @@
 				<div class="card-header">
 					<h3 class="card-title">1. Import </h3>
 				</div>
-
 				<form action="{{ route('api.cards.import') }}" role="form" method="post" id="js-import-form">
 					<div class="card-body">
 						<div class="row">
@@ -39,7 +38,6 @@
 						<button class="btn btn-primary" id="js-import-submit" type="submit">Merge</button>
 					</div>
 				</form>
-
 			</div>
 		</div>
 		<div class="col-9">
@@ -57,6 +55,10 @@
 				</div>
 
 				<div class="card-footer">
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="js-auto-assign-brands" autocomplete="off">
+						<label class="custom-control-label" for="js-auto-assign-brands">Auto-assign brands</label>
+					</div>
 				</div>
 			</div>
 		</div>

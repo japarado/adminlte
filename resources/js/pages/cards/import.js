@@ -3,10 +3,10 @@ import {elementCreateFormError} from "../../utils";
 import HandsonTable from "handsontable";
 import Swal from "sweetalert2";
 
-import {cardIndex, parseCardCsvData, cardImport} from "../../services/index";
+import {cardIndex, parseCardCsvData, cardImport, cardAssignBrands} from "../../services/index";
 import {forEach} from "lodash";
 
-document.getElementById("js-import-submit").addEventListener('click', (e) => {
+document.getElementById("js-import-submit").addEventListener("click", (e) => {
 	e.preventDefault();
 	domClearCardsErrors();
 	domClearMergedData();
@@ -55,28 +55,33 @@ function triggerErrorModal()
 
 function domSetFilesErrors(errors)
 {
-	console.log(errors)
+	console.log(errors);
 	const domErrorList = document.getElementById("js-import-errors");
 	errors.forEach(errorMessage => {
 		const error = document.createElement("li");
 		error.className = "list-group-item list-group-item-danger";
 		error.innerText = errorMessage;
 		domErrorList.appendChild(error);
-	})
+	});
+}
+
+function domGetParsedData()
+{
+	return JSON.parse(document.getElementById("js-parsed-results-hidden").value);
 }
 
 function domSetParsedData(mergedData)
 {
 	const field = document.getElementById("js-parsed-results-hidden");
 	field.value = mergedData;
-	field.dispatchEvent(new Event('change'));
+	field.dispatchEvent(new Event("change"));
 }
 
 function domClearMergedData()
 {
 	const field = document.getElementById("js-parsed-results-hidden");
 	field.value = JSON.stringify([]);
-	field.dispatchEvent(new Event('change'));
+	field.dispatchEvent(new Event("change"));
 }
 
 // Cleanup functions
@@ -88,37 +93,49 @@ function domClearCardsErrors()
 /******************************* END MERGE **********************/
 
 /******************************* REVIEW DATA **********************/
-document.getElementById("js-parsed-results-hidden").addEventListener('change', handleUpdateMergeData);
+document.getElementById("js-parsed-results-hidden").addEventListener("change", handleUpdateMergeData);
 function handleUpdateMergeData(e)
 {
-	const mergeTableContainer = document.getElementById('js-import-review-table')
+	const mergeTableContainer = document.getElementById("js-import-review-table");
 	mergeTableContainer.innerHTML = "";
 	const data = e.target.value;
 
 	const colHeaders = [
-		'Abbott Code',
-		'Card Code',
-		'First Name',
-		'Last Name',
-		'Phone Number'
+		"Abbott Code",
+		"Card Code",
+		"First Name",
+		"Last Name",
+		"Phone Number",
+		"Brand"
 	];
 
 	const columns = [
-		{data: 'abbott_code', editor: false},
-		{data: 'card_code', editor: false},
-		{data: 'first_name', editor: false},
-		{data: 'last_name', editor: false},
-		{data: 'phone_number', editor: false},
-	]
+		{data: "abbott_code", editor: false},
+		{data: "card_code", editor: false},
+		{data: "first_name", editor: true},
+		{data: "last_name", editor: true},
+		{data: "phone_number", editor: true},
+		{data: "brand", editor: false},
+	];
 
 	new HandsonTable(mergeTableContainer, {
 		data: JSON.parse(data),
-		stretchH: 'all',
+		stretchH: "all",
 		rowHeaders: true,
 		colHeaders: colHeaders,
 		columns: columns,
 		height: "20rem",
-		licenseKey: 'non-commercial-and-evaluation'
-	})
+		licenseKey: "non-commercial-and-evaluation",
+		afterChange: (changes, source) => {console.table(changes); console.log(source)}
+	});
 }
 /******************************* END REVIEW DATA **********************/
+
+document.getElementById("js-auto-assign-brands").addEventListener("click", handleAssignBrands);
+
+async function handleAssignBrands(_e) 
+{
+	const cards = domGetParsedData();
+	const response = await cardAssignBrands(cards);
+	domSetParsedData(JSON.stringify(response.data.cards));
+}
