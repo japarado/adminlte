@@ -1,16 +1,12 @@
 @extends('adminlte::page')
 
-@section('title', 'Vouchers')
+@section('title', 'Rejected Contacts')
 
 @section('content_header')
     <h1>Rejected Contacts</h1>
 @stop
 
 @section('content')
-	<div class="d-hidden">
-		<input type="hidden" value="{{ json_encode($vouchers) }}" id="js-cards">
-	</div>
-
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
@@ -46,7 +42,7 @@
 							</div>
 						</div>
 					</div>
-					{{ $vouchers->links() }}
+					{{ $rejected_contacts->links() }}
 				</div>
 			</div>
 		<st /div>
