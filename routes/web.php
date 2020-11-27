@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RejectedContactController;
 use App\Http\Controllers\VoucherController;
