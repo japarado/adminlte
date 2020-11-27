@@ -264,6 +264,11 @@ return [
             'url'  => '/vouchers',
             'icon' => 'fas fa-fw fa-ticket-alt',
         ],
+		[
+            'text' => 'Contacts',
+            'url'  => '/contacts',
+            'icon' => 'fas fa-fw fa-user-tie',
+		]
     ],
 
     /*

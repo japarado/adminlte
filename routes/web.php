@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,5 @@ Route::middleware(['auth'])->group(function() {
 
 	Route::resource('vouchers', VoucherController::class)->parameter('vouchers', 'id');
 
+	Route::resource('contacts', ContactController::class)->parameter('contacts', 'id');
 });

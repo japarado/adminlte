@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -13,7 +14,13 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+		$contacts = Contact::paginate(config('constants.STANDARD_PAGE_SIZE'));
+
+		$context = [
+			'contacts' => $contacts
+		];
+
+		return view('contacts.index', $context);
     }
 
     /**
@@ -79,6 +86,5 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
     }
 }
