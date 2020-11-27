@@ -29,6 +29,7 @@
 											<th>Code</th>
 											<th>Sync Status</th>
 											<th>Batch</th>
+											<th>Created At</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -38,6 +39,7 @@
 												<td>{{ $card->code }}</td>
 												<td>{{ $card->is_synced }}</td>
 												<td>{{ $card->batch_id }}</td>
+												<td>{{ $card->created_at }}</td>
 											</tr>
 										@endforeach
 									</tbody>

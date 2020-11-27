@@ -30,6 +30,7 @@
 											<th>Discount Value</th>
 											<th>Type</th>
 											<th>Batch</th>
+											<th>Created At</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -40,6 +41,7 @@
 												<td>{{ $voucher->discount_value }}</td>
 												<th>{{ $voucher->is_amount ? "Amount" : "Percent" }}</th>
 												<td>{{ $voucher->batch_id }}</td>
+												<td>{{ $voucher->created_at }}</td>
 											</tr>
 										@endforeach
 									</tbody>

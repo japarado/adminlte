@@ -27,6 +27,9 @@
 											<th>Last Name</th>
 											<th>Phone Number</th>
 											<th>Email</th>
+											<th>Type</th>
+											<th>Batch</th>
+											<th>Created At</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -36,7 +39,10 @@
 												<td>{{ $contact->first_name }}</td>
 												<td>{{ $contact->last_name }}</td>
 												<td>{{ $contact->phone_number }}</td>
-												<td>{{ $contact->email ?: "N/A" }}</td>
+												<td>{{ $contact->email ?: "n/a" }}</td>
+												<td>{{ $contact->contactable->batch->import_type }}</td>
+												<td>{{ $contact->contactable->batch->id }}</td>
+												<td>{{ $contact->created_at }}</td>
 											</tr>
 										@endforeach
 									</tbody>

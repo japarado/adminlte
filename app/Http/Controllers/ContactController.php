@@ -14,7 +14,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-		$contacts = Contact::paginate(config('constants.STANDARD_PAGE_SIZE'));
+		$contacts = Contact::with(['contactable' => function($query) {
+			$query->with('batch');
+		}])->orderBy('id', 'desc')->paginate(config('constants.STANDARD_PAGE_SIZE'));
 
 		$context = [
 			'contacts' => $contacts
