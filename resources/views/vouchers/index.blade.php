@@ -30,6 +30,7 @@
 											<th>Discount Value</th>
 											<th>Type</th>
 											<th>Batch</th>
+											<th>Created At</th>
 										</tr>
 									</thead>
 									<tbody>
