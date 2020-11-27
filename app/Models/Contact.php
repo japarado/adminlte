@@ -13,6 +13,15 @@ class Contact extends Model
 	 
 	protected $table = "contact";
 
+	protected $fillable = [
+		'first_name',
+		'last_name',
+		'phone_number',
+		'email',
+		'contactable_id',
+		'contactable_type'
+	];
+
 	public function contactable()
 	{
 		return $this->morphTo();
