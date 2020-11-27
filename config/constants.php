@@ -99,8 +99,11 @@ return [
             ]
         ]
     ],
-
 	'ABBOTT_CODE' => 9222,
+	'STANDARD_PAGE_SIZE' => 10,
 
-	'STANDARD_PAGE_SIZE' => 10
+	'IMPORT_TYPES' => [
+		'voucher' => 'VOUCHER',
+		'card' => 'CARD'
+	]
 ];
