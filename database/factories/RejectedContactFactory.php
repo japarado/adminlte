@@ -25,6 +25,7 @@ class RejectedContactFactory extends Factory
 			'first_name' => $this->faker->firstName,
 			'last_name' => $this->faker->lastName,
 			'phone_number' => $this->faker->phoneNumber,
+			'email' => $this->faker->unique()->email(),
         ];
     }
 }
