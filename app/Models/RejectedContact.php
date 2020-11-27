@@ -13,6 +13,13 @@ class RejectedContact extends Model
 
 	protected $table = "rejected_contact";
 
+	protected $fillable = [
+		'first_name',
+		'last_name',
+		'phone_number',
+		'email',
+	];
+
 	public function batch()
 	{
 		return $this->belongsTo(Batch::class);
