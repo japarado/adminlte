@@ -14,7 +14,7 @@ class Batch extends Model
 
 	protected $table = 'batch';
 
-	protected $fillable = ['code', 'import_type', 'brand_id', 'user_id'];
+	protected $fillable = ['import_type', 'brand_id', 'user_id'];
 
 	public function user()
 	{
