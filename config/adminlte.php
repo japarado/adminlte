@@ -264,6 +264,11 @@ return [
             'url'  => '/vouchers',
             'icon' => 'fas fa-fw fa-ticket-alt',
         ],
+        [
+            'text' => 'Rejected Contacts',
+            'url'  => '/rejected-contacts',
+            'icon' => 'fas fa-fw fa-times-circle',
+        ],
     ],
 
     /*
