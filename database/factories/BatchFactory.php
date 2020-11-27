@@ -24,7 +24,6 @@ class BatchFactory extends Factory
     public function definition()
     {
         return [
-			'code' => Str::random(30),
 			'user_id' => User::factory(),
         ];
     }

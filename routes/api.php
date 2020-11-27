@@ -23,5 +23,5 @@ Route::resource('cards', CardControllerJson::class, ['as' => 'api.cards'])->para
 
 
 Route::prefix('cards')->group(function() {
-	Route::post('merge', [CardControllerJson::class, "merge"])->name('api.cards.merge');
+	Route::post('import', [CardControllerJson::class, "import"])->name('api.cards.import');
 });

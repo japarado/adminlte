@@ -26,10 +26,11 @@ Route::middleware(['auth'])->group(function() {
 	Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 	Route::prefix('cards')->group(function() {
-		Route::get('merge', CardController::class . "@mergeView")->name('cards.merge-view');
+		Route::get('import', [CardController::class, 'import'])->name('cards.import');
 	});
 
 	Route::resource('cards', CardController::class)->parameter('cards', 'id');
+
 	Route::resource('vouchers', VoucherController::class)->parameter('vouchers', 'id');
 
 });

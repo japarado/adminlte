@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MergeCards;
+use App\Http\Requests\ImportCards;
 use App\Http\Services\CardService;
-use App\Imports\CardMergeImport;
-use App\Imports\ContactMergeImport;
-use App\Models\AbbottCode;
+use App\Imports\CardImport;
+use App\Models\Batch;
 use App\Models\Card;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 
 class CardControllerJson extends Controller
 {
@@ -20,7 +20,6 @@ class CardControllerJson extends Controller
 
     private CardService $card_service;
 
-
     public function index()
     {
         $data = [
@@ -30,29 +29,23 @@ class CardControllerJson extends Controller
         return response()->json($data);
     }
 
-    public function merge(MergeCards $request)
+    public function import(ImportCards $request)
     {
-        $cards_file = $request->file('cards');
-        $contacts_file = $request->file('contacts');
+		$cards_file = $request->file('cards');
 
-        $merged = $this->card_service->merge($cards_file, $contacts_file);
-
-        return response()->json([
-            'merged' => $merged
-        ]) ;
-    }
-
-    private static function getAbbottCode(Request $request)
-    {
-        $abbott_code = null;
-		if ($request->input('abbott_code_id')) 
+		try 
 		{
-            $abbott_code = AbbottCode::find($request->input('abbott_code_id'));
-		} 
-		else 
+			Excel::import(new CardImport(), $cards_file);
+			return response()->json([
+				'success' => true
+			]);
+		}
+		catch(ValidationException $e)
 		{
-            $abbott_code = AbbottCode::first();
-        }
-        return $abbott_code;
+			$failures = $e->failures();
+			return response()->json([
+				'failures' => $failures
+			]);
+		}
     }
 }

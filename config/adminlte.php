@@ -253,9 +253,9 @@ return [
 					'url' => '/cards'
 				],
 				[
-					'text' => 'Merge',
+					'text' => 'Import',
 					'icon' => 'fas fa-fw fa-object-group',
-					'url' => '/cards/merge'
+					'url' => '/cards/import'
 				]
 			]
         ],
