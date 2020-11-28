@@ -55,10 +55,25 @@
 				</div>
 
 				<div class="card-footer">
-					<div class="custom-control custom-switch">
-						<input type="checkbox" class="custom-control-input" id="js-auto-assign-brands" autocomplete="off">
-						<label class="custom-control-label" for="js-auto-assign-brands">Auto-assign brands</label>
-					</div>
+					<form class="form-inline" action="">
+						<div class="custom-control custom-switch">
+							<input type="checkbox" class="custom-control-input" id="js-auto-assign-brands" autocomplete="off">
+							<label class="custom-control-label" for="js-auto-assign-brands">Auto-assign brands</label>
+						</div>
+
+						<div class="custom-control d-flex">
+							<select class="custom-select" name="fallback-brand-id" id="fallback-brand-id">
+								@foreach($brands as $brand)
+									<option value="{{ $brand->id }}">{{ $brand->name }}</option>
+								@endforeach
+							</select>
+							<label for="fallback-brand-id" class="custom-select-label ml-2">Fallback Brand</label>
+						</div>
+					</form>
+					{{-- <div class="custom-control custom-switch"> --}}
+					{{-- 	<input type="checkbox" class="custom-control-input" id="js-auto-assign-brands" autocomplete="off"> --}}
+					{{-- 	<label class="custom-control-label" for="js-auto-assign-brands">Auto-assign brands</label> --}}
+					{{-- </div> --}}
 				</div>
 			</div>
 		</div>
