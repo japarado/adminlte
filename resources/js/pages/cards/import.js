@@ -9,7 +9,7 @@ import {forEach} from "lodash";
 document.getElementById("js-import-submit").addEventListener("click", (e) => {
 	e.preventDefault();
 	domClearCardsErrors();
-	domClearMergedData();
+	domClearParsedData();
 	handleImport();
 });
 
@@ -77,7 +77,7 @@ function domSetParsedData(mergedData)
 	field.dispatchEvent(new Event("change"));
 }
 
-function domClearMergedData()
+function domClearParsedData()
 {
 	const field = document.getElementById("js-parsed-results-hidden");
 	field.value = JSON.stringify([]);
