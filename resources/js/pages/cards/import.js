@@ -71,10 +71,10 @@ function initializeReviewTable()
 	const columns = [
 		{data: "abbott_code", editor: false},
 		{data: "card_code", editor: false},
-		{data: "first_name", editor: true},
-		{data: "last_name", editor: true},
-		{data: "phone_number", editor: true},
-		{data: "brand", editor: false},
+		{data: "first_name"},
+		{data: "last_name"},
+		{data: "phone_number"},
+		{data: "brand"},
 	];
 
 	REVIEW_TABLE = new HandsonTable(mergeTableContainer, {
