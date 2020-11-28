@@ -14,6 +14,10 @@
 		"linebreak-style": ["error", "unix"],
 		"quotes": ["error", "double"],
 		"semi": ["error", "always"],
-		"no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }]
+		"no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+		"no-var": "warn",
+		"prefer-const": "warn",
+		"arrow-parens": "warn",
+		"prefer-arrow-callback": "warn"
 	}
 }
