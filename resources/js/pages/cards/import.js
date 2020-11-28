@@ -57,7 +57,7 @@ function domSetFilesErrors(errors)
 {
 	console.log(errors);
 	const domErrorList = document.getElementById("js-import-errors");
-	errors.forEach(errorMessage => {
+	errors.forEach((errorMessage) => {
 		const error = document.createElement("li");
 		error.className = "list-group-item list-group-item-danger";
 		error.innerText = errorMessage;
@@ -126,16 +126,24 @@ function handleUpdateMergeData(e)
 		columns: columns,
 		height: "20rem",
 		licenseKey: "non-commercial-and-evaluation",
-		afterChange: (changes, source) => {console.table(changes); console.log(source)}
+		afterChange: (changes, source) => {console.table(changes); console.log(source);}
 	});
 }
 /******************************* END REVIEW DATA **********************/
 
 document.getElementById("js-auto-assign-brands").addEventListener("click", handleAssignBrands);
 
-async function handleAssignBrands(_e) 
+async function handleAssignBrands(e) 
 {
 	const cards = domGetParsedData();
-	const response = await cardAssignBrands(cards);
-	domSetParsedData(JSON.stringify(response.data.cards));
+	if(e.target.checked)
+	{
+		const response = await cardAssignBrands(cards);
+		domSetParsedData(JSON.stringify(response.data.cards));
+	}
+	else
+	{
+		const cardsWithRemovedBrands = cards.map((card) => {card.brand = null; return card;});
+		domSetParsedData(JSON.stringify(cardsWithRemovedBrands));
+	}
 }
