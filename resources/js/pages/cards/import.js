@@ -101,7 +101,6 @@ function triggerErrorModal()
 
 function domSetFilesErrors(errors)
 {
-	console.log(errors);
 	const domErrorList = document.getElementById("js-import-errors");
 	errors.forEach((errorMessage) => 
 	{
