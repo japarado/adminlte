@@ -84,6 +84,7 @@ function initializeReviewTable()
 		colHeaders: colHeaders,
 		columns: columns,
 		height: "20rem",
+		minSpareRows: 0,
 		licenseKey: "non-commercial-and-evaluation",
 		afterChange: (changes, source) => 
 		{
