@@ -96,6 +96,12 @@ class CardController extends Controller
 
     public function import()
     {
-        return view('cards.import');
+		$brands = Brand::orderBy('name')->get();
+
+		$context = [
+			'brands' => $brands
+		];
+
+        return view('cards.import', $context);
     }
 }
