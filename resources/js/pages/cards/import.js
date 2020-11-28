@@ -40,11 +40,11 @@ async function handleImport()
 	catch(error)
 	{
 		const data = error.response.data;
-		if(data.hasOwnProperty("errors"))
+		if(Object.prototype.hasOwnProperty.call(data, "errors"))
 		{
 			const errors = data.errors;
 			let errorList = [];
-			if(errors.hasOwnProperty("cards"))
+			if(Object.prototype.hasOwnProperty.call(errors, "cards"))
 			{
 				errorList = [...errorList, ...errors.cards];
 			}
