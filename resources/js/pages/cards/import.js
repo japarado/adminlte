@@ -86,13 +86,8 @@ function initializeReviewTable()
 		height: "20rem",
 		minSpareRows: 0,
 		licenseKey: "non-commercial-and-evaluation",
-		afterChange: (changes, source) => 
-		{
-			console.table(changes); console.log(source);
-		}
 	});
 }
-
 
 function triggerErrorModal()
 {
