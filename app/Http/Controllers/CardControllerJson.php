@@ -26,11 +26,13 @@ class CardControllerJson extends Controller
 
     public function index()
     {
-        $data = [
-            'cards' => Card::paginate(config('constants.STANDARD_PAGE_SIZE')),
-        ];
+		$cards = Card::paginate(config('constants.STANDARD_PAGE_SIZE'));
 
-        return response()->json($data);
+		$context = [
+			'cards' => $cards,
+		];
+
+        return response()->json($context);
     }
 
     public function parseCsvData(ParseCardCsv $request)
