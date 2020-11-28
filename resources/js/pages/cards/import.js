@@ -125,19 +125,19 @@ function domClearCardsErrors()
 document.getElementById("js-auto-assign-brands").addEventListener("click", handleAssignBrands);
 async function handleAssignBrands(e) 
 {
-	const cards = REVIEW_TABLE_DATA;
 	if(e.target.checked)
 	{
-		const response = await cardAssignBrands(cards);
+		const response = await cardAssignBrands(REVIEW_TABLE_DATA);
 		REVIEW_TABLE_DATA = response.data.cards;
+		initializeReviewTable();
 	}
 	else
 	{
-		const cardsWithRemovedBrands = cards.map((card) => 
+		REVIEW_TABLE_DATA = REVIEW_TABLE_DATA.map((card) => 
 		{
-			card.brand = null; return card;
+			card.brand = null;
+			return card;
 		});
-		REVIEW_TABLE_DATA = cardsWithRemovedBrands;
 	}
 	initializeReviewTable();
 }
