@@ -138,3 +138,32 @@ async function handleAssignBrands(e)
 	}
 	initializeReviewTable();
 }
+
+document.getElementById("js-fallback-brand-id").addEventListener("change", handleSelectFallbackBrand);
+
+function handleSelectFallbackBrand(e)
+{
+	const option = e.target.options[e.target.selectedIndex];
+	const brand = option.dataset.brandName;
+	console.log(REVIEW_TABLE_DATA);
+
+	const rowsWithEmptyBrands = REVIEW_TABLE_DATA.filter((card) => !card.brand);
+
+	if(rowsWithEmptyBrands.length > 0)
+	{
+		console.log(`Assigning fallback brands to ${rowsWithEmptyBrands.length} rows`);
+		REVIEW_TABLE_DATA = REVIEW_TABLE_DATA.map((card) =>
+		{
+			if(!card.brand)
+			{
+				card.brand = brand;
+			}
+			return card;
+		});
+		initializeReviewTable();
+	}
+	else 
+	{
+		console.log("No cards requiring fallbacks brands were found");
+	}
+}
