@@ -48,6 +48,7 @@ class CardControllerJson extends Controller
                     'first_name' => $card[2],
                     'last_name' => $card[3],
                     'phone_number' => $card[4],
+                    'email' => $card[5],
                 ];
             array_push($cards, $named_card);
         }

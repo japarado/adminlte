@@ -65,6 +65,7 @@ function initializeReviewTable()
 		"First Name",
 		"Last Name",
 		"Phone Number",
+		"Email",
 		"Brand"
 	];
 
@@ -74,6 +75,7 @@ function initializeReviewTable()
 		{data: "first_name"},
 		{data: "last_name"},
 		{data: "phone_number"},
+		{data: "email"},
 		{data: "brand"},
 	];
 
