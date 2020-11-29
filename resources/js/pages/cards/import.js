@@ -167,3 +167,21 @@ function handleSelectFallbackBrand(e)
 		console.log("No cards requiring fallbacks brands were found");
 	}
 }
+
+document.getElementById("js-import-submit").addEventListener("click", handleClickImport);
+
+async function handleClickImport(e)
+{
+	e.preventDefault();
+	try 
+	{
+		const response = await cardImport(REVIEW_TABLE_DATA);
+		console.log(response);
+	}
+	catch(error)
+	{
+		const response = error.response;
+		const data = error.response.data;
+		console.log(data);
+	}
+}
