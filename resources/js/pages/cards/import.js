@@ -175,7 +175,8 @@ async function handleClickImport(e)
 	e.preventDefault();
 	try 
 	{
-		const response = await cardImport(REVIEW_TABLE_DATA);
+		const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
+		const response = await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
 		console.log(response);
 	}
 	catch(error)
