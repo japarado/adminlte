@@ -76,7 +76,7 @@ function initializeReviewTable()
 		{data: "last_name"},
 		{data: "phone_number"},
 		{data: "email"},
-		{data: "brand"},
+		{data: "brand", editor: false},
 	];
 
 	REVIEW_TABLE = new HandsonTable(mergeTableContainer, {
