@@ -129,18 +129,17 @@ async function handleAssignBrands(e)
 	{
 		const response = await cardAssignBrands(REVIEW_TABLE_DATA);
 		REVIEW_TABLE_DATA = response.data.cards;
-		initializeReviewTable();
 	}
 	else
 	{
 		REVIEW_TABLE_DATA = REVIEW_TABLE_DATA.map((card) => 
 		{
-			card.brand = null;
+			card.brand_name = null;
+			card.brand_id = null;
 			return card;
 		});
 	}
 	initializeReviewTable();
-	// document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
 }
 
 document.getElementById("js-fallback-brand-id").addEventListener("change", handleSelectFallbackBrand);
