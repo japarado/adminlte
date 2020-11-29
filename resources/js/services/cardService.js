@@ -26,6 +26,7 @@ async function assignBrands(cards)
 
 async function importCards(cards)
 {
+	return await axios.post(`${prefix}/import`, {cards});
 }
 
 export {index, parseCsvData, assignBrands, importCards};
