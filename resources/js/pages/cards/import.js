@@ -6,6 +6,10 @@ import Swal from "sweetalert2";
 import {cardIndex, parseCardCsvData, cardImport, cardAssignBrands} from "../../services/index";
 import {forEach} from "lodash";
 
+let REVIEW_TABLE;
+let REVIEW_TABLE_DATA = [];
+const BRANDS = JSON.parse(document.getElementById("js-brands").value);
+
 initializeReviewTable();
 
 document.getElementById("js-parse-submit").addEventListener("click", (e) => 
@@ -20,8 +24,6 @@ document.getElementById("js-parse-submit").addEventListener("click", (e) =>
 	handleClickParse();
 });
 
-let REVIEW_TABLE;
-let REVIEW_TABLE_DATA = [];
 
 async function handleClickParse()
 {
@@ -59,6 +61,7 @@ async function handleClickParse()
 
 function initializeReviewTable()
 {
+	console.log(BRANDS);
 	const mergeTableContainer = document.getElementById("js-import-review-table");
 	mergeTableContainer.innerHTML = "";
 
@@ -79,7 +82,7 @@ function initializeReviewTable()
 		{data: "last_name"},
 		{data: "phone_number"},
 		{data: "email"},
-		{data: "brand_name", editor: false},
+		{data: "brand_name", type: "dropdown", source: BRANDS.map((brand) => brand.name)},
 	];
 
 	REVIEW_TABLE = new HandsonTable(mergeTableContainer, {
@@ -91,7 +94,35 @@ function initializeReviewTable()
 		height: "20rem",
 		minSpareRows: 0,
 		licenseKey: "non-commercial-and-evaluation",
+		afterChange: handleUpdateTable
 	});
+}
+
+function handleUpdateTable(changes, source)
+{
+	if(changes && source)
+	{
+		changes.forEach(([row, prop, _oldValue, newValue]) => 
+		{
+			if(prop === "brand_name")
+			{
+				document.getElementById("js-auto-assign-brands").checked = false;
+				const edited_data = REVIEW_TABLE_DATA.map((card, index) => 
+				{
+					if(index === row)
+					{
+						card.brand_id = BRANDS.find((brand) => brand.name === newValue).id;
+					}
+
+					return card;
+				});
+
+				REVIEW_TABLE_DATA = edited_data;
+			}
+		});
+	}
+
+	console.log(REVIEW_TABLE_DATA);
 }
 
 function triggerErrorModal()
@@ -122,8 +153,8 @@ function domClearCardsErrors()
 	document.getElementById("js-import-errors").innerHTML = "";
 }
 
-document.getElementById("js-auto-assign-brands").addEventListener("click", handleAssignBrands);
-async function handleAssignBrands(e) 
+document.getElementById("js-auto-assign-brands").addEventListener("click", handleTickAutoAssignBrands);
+async function handleTickAutoAssignBrands(e) 
 {
 	if(e.target.checked)
 	{
@@ -140,6 +171,7 @@ async function handleAssignBrands(e)
 		});
 	}
 	initializeReviewTable();
+	document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
 }
 
 document.getElementById("js-fallback-brand-id").addEventListener("change", handleSelectFallbackBrand);

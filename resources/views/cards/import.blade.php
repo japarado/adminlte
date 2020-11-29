@@ -8,8 +8,7 @@
 
 @section('content')
 	<div id="hidden-fields">
-		<input type="hidden" name="cards" id="js-cards-hidden">
-		<input type="hidden" name="parse-results" id="js-parsed-results-hidden">
+		<input type="hidden" id="js-brands" value="{{ $brands }}">
 	</div>
 
 	<div id="hidden-html" class="d-none">
