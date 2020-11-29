@@ -69,6 +69,10 @@
 							</select>
 							<label for="fallback-brand-id" class="custom-select-label ml-2">Fallback Brand</label>
 						</div>
+
+						<div class="custom-control">
+							<button class="btn btn-primary" id="js-import-submit" type="button">Import</button>
+						</div>
 					</form>
 				</div>
 			</div>
