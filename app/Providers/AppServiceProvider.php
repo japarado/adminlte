@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 		Paginator::useBootstrap();
-		Contact::observe(ContactObserver);
+		Contact::observe(ContactObserver::class);
 		Card::observe(CardObserver::class);
     }
 }
