@@ -3,7 +3,7 @@
 @section('title', 'Merge Cards')
 
 @section('content_header')
-    <h1>Merge Cards</h1>
+    <h1>Import Cards</h1>
 @stop
 
 @section('content')
