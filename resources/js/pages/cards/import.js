@@ -61,7 +61,6 @@ async function handleClickParse()
 
 function initializeReviewTable()
 {
-	console.log(BRANDS);
 	const mergeTableContainer = document.getElementById("js-import-review-table");
 	mergeTableContainer.innerHTML = "";
 
@@ -180,13 +179,11 @@ function handleSelectFallbackBrand(e)
 	const option = e.target.options[e.target.selectedIndex];
 	const brandName = option.dataset.brandName;
 	const brandId = e.target.value;
-	console.log(REVIEW_TABLE_DATA);
 
 	const rowsWithEmptyBrands = REVIEW_TABLE_DATA.filter((card) => !card.brand_id && !card.brand_name);
 
 	if(rowsWithEmptyBrands.length > 0)
 	{
-		console.log(`Assigning fallback brands to ${rowsWithEmptyBrands.length} rows`);
 		REVIEW_TABLE_DATA = REVIEW_TABLE_DATA.map((card) =>
 		{
 			if(!card.brand)
@@ -212,13 +209,12 @@ async function handleClickImport(e)
 	try 
 	{
 		const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
+		document.getElementById("js-fallback-brand-id").dispatchEvent(new Event('change'));
 		const response = await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
-		console.log(response);
 	}
 	catch(error)
 	{
 		const response = error.response;
 		const data = error.response.data;
-		console.log(data);
 	}
 }
