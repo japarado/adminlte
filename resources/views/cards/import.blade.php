@@ -35,7 +35,7 @@
 					</div>
 
 					<div class="card-footer">
-						<button class="btn btn-primary" id="js-import-submit" type="submit">Merge</button>
+						<button class="btn btn-primary" id="js-parse-submit" type="submit">Merge</button>
 					</div>
 				</form>
 			</div>
