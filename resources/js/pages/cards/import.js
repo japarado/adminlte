@@ -26,6 +26,9 @@ let REVIEW_TABLE_DATA = [];
 async function handleClickParse()
 {
 	const cards = document.getElementById("js-cards").files[0];
+
+	// Set the "Auto-assign brands"  checkbox back to unchecked
+	document.getElementById("js-auto-assign-brands").checked = false;
 	try 
 	{
 		const response = await parseCardCsvData(cards);
@@ -76,7 +79,7 @@ function initializeReviewTable()
 		{data: "last_name"},
 		{data: "phone_number"},
 		{data: "email"},
-		{data: "brand", editor: false},
+		{data: "brand_name", editor: false},
 	];
 
 	REVIEW_TABLE = new HandsonTable(mergeTableContainer, {
@@ -137,17 +140,18 @@ async function handleAssignBrands(e)
 		});
 	}
 	initializeReviewTable();
+	// document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
 }
 
 document.getElementById("js-fallback-brand-id").addEventListener("change", handleSelectFallbackBrand);
-
 function handleSelectFallbackBrand(e)
 {
 	const option = e.target.options[e.target.selectedIndex];
-	const brand = option.dataset.brandName;
+	const brandName = option.dataset.brandName;
+	const brandId = e.target.value;
 	console.log(REVIEW_TABLE_DATA);
 
-	const rowsWithEmptyBrands = REVIEW_TABLE_DATA.filter((card) => !card.brand);
+	const rowsWithEmptyBrands = REVIEW_TABLE_DATA.filter((card) => !card.brand_id && !card.brand_name);
 
 	if(rowsWithEmptyBrands.length > 0)
 	{
@@ -156,7 +160,8 @@ function handleSelectFallbackBrand(e)
 		{
 			if(!card.brand)
 			{
-				card.brand = brand;
+				card.brand_name = brandName;
+				card.brand_id = brandId;
 			}
 			return card;
 		});
