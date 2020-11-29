@@ -81,7 +81,12 @@ function initializeReviewTable()
 		{data: "last_name"},
 		{data: "phone_number"},
 		{data: "email"},
-		{data: "brand_name", type: "dropdown", source: BRANDS.map((brand) => brand.name)},
+		{
+			data: "brand_name",
+			type: "dropdown",
+			source: BRANDS.map((brand) => brand.name),
+			allowInvalid: false
+		},
 	];
 
 	REVIEW_TABLE = new HandsonTable(mergeTableContainer, {
@@ -101,22 +106,25 @@ function handleUpdateTable(changes, source)
 {
 	if(changes && source)
 	{
-		changes.forEach(([row, prop, _oldValue, newValue]) => 
+		changes.forEach(([row, prop, oldValue, newValue]) => 
 		{
-			if(prop === "brand_name")
+			if(oldValue !== newValue)
 			{
-				document.getElementById("js-auto-assign-brands").checked = false;
-				const edited_data = REVIEW_TABLE_DATA.map((card, index) => 
+				if(prop === "brand_name")
 				{
-					if(index === row)
+					document.getElementById("js-auto-assign-brands").checked = false;
+					const edited_data = REVIEW_TABLE_DATA.map((card, index) => 
 					{
-						card.brand_id = BRANDS.find((brand) => brand.name === newValue).id;
-					}
+						if(index === row)
+						{
+							card.brand_id = BRANDS.find((brand) => brand.name === newValue).id;
+						}
 
-					return card;
-				});
+						return card;
+					});
 
-				REVIEW_TABLE_DATA = edited_data;
+					REVIEW_TABLE_DATA = edited_data;
+				}
 			}
 		});
 	}
@@ -209,7 +217,7 @@ async function handleClickImport(e)
 	try 
 	{
 		const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
-		document.getElementById("js-fallback-brand-id").dispatchEvent(new Event('change'));
+		document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
 		const response = await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
 	}
 	catch(error)
