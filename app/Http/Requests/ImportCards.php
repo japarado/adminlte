@@ -24,6 +24,9 @@ class ImportCards extends FormRequest
     public function rules()
     {
         return [
+			'cards' => 'required',
+			'fallback_brand_id' => 'required|numeric',
+
             'cards.*.abbott_code' => 'required|max:4|alpha_num|exists:abbott_code,code',
             'cards.*.card_code' => 'required|min:14|alpha_num|unique:card,code',
 
