@@ -39,4 +39,9 @@ class Card extends Model
 	{
 		return $this->morphOne(SmsLog::class, 'loggable');
 	}
+
+	public function getCodePrefixAttribute()
+	{
+		return substr($this->code, 0, 4);
+	}
 }
