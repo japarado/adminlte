@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Http\Services\CardService;
 use App\Models\Card;
 
 class CardObserver
@@ -14,7 +15,14 @@ class CardObserver
      */
     public function created(Card $card)
     {
-        //
+        /* $suitable_brand = CardService::findBrandByCardCode($card->code_prefix); */
+        /* if ($suitable_brand) { */
+        /*     $card->brand_id = $suitable_brand->id; */
+        /*     $card->is_code_valid = true; */
+        /* } else { */
+        /*     $card->is_code_valid = false; */
+        /* } */
+        /* $card->save(); */
     }
 
     /**
