@@ -69,7 +69,10 @@ class CardControllerJson extends Controller
 		{
 			foreach($brand->brandCodes as $brand_code)
 			{
-				$brand_by_code[$brand_code->code] = $brand->name;
+				$brand_by_code[$brand_code->code] = [
+					'brand_name' => $brand->name,
+					'brand_id' => $brand->id
+				];
 			}
 		}
 
@@ -80,7 +83,8 @@ class CardControllerJson extends Controller
 			$brand_code = substr($card['card_code'], 0, 4);
 			if(array_key_exists($brand_code, $brand_by_code))
 			{
-				$card['brand'] = $brand_by_code[$brand_code];
+				$card['brand_name'] = $brand_by_code[$brand_code]['brand_name'];
+				$card['brand_id'] = $brand_by_code[$brand_code]['brand_id'];
 				array_push($return_value, $card);
 			}
 		}
