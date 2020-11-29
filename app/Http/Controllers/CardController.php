@@ -18,6 +18,7 @@ class CardController extends Controller
     {
 		$cards = Card::with('contact')->paginate(config('constants.STANDARD_PAGE_SIZE'));
 		$brands = Brand::orderBy('name')->get();
+
         $context = [
 			'cards' => $cards,
 			'brands' => $brands
