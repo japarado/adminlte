@@ -90,7 +90,14 @@ class CardControllerJson extends Controller
 		]);
 	}
 
-    public function import(Request $request)
+    public function import(ImportCards $request)
     {
+		$cards = $request->input('cards');
+		$fallback_brand_id = $request->input('fallback_brand_id');
+
+		return response()->json([
+			'cards' => $cards,
+			'fallback_brand_id' => $fallback_brand_id
+		]);
     }
 }
