@@ -8,7 +8,7 @@ import {forEach} from "lodash";
 
 initializeReviewTable();
 
-document.getElementById("js-import-submit").addEventListener("click", (e) => 
+document.getElementById("js-parse-submit").addEventListener("click", (e) => 
 {
 	e.preventDefault();
 	domClearCardsErrors();
@@ -17,13 +17,13 @@ document.getElementById("js-import-submit").addEventListener("click", (e) =>
 	REVIEW_TABLE_DATA = [];
 	initializeReviewTable();
 
-	handleImport();
+	handleClickParse();
 });
 
 let REVIEW_TABLE;
 let REVIEW_TABLE_DATA = [];
 
-async function handleImport()
+async function handleClickParse()
 {
 	const cards = document.getElementById("js-cards").files[0];
 	try 
