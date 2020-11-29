@@ -2,31 +2,15 @@
 namespace App\Http\Services;
 
 use App\Models\Brand;
-use App\Models\BrandCode;
 
-class BrandService {
-	public function __construct()
-	{
-		
-	}
-
-	/**
-	 * Accepts a string/integer brand code and returns a Brand instance
-	 *
-	 * @param int|string $code
-	 * @return Brand  
-	 */
-	public static function getBrandByCode($code): ?Brand
-	{
-		$brand_code = BrandCode::with('brand')->where('code', $code)->first();
-		if($brand_code)
-		{
-			return $brand_code->brand;
-		}
-		else 
-		{
-			return null;
-		}
-	}
+class BrandService
+{
+    public static function getBrandByCardCode(string $card_code) : ?Brand
+    {
+        $brand_code = substr($card_code, 0, 4);
+        $brand =  Brand::whereHas('brandCodes', function ($query) use ($brand_code) {
+            $query->where('code', 'like', "%${brand_code}%");
+        })->first();
+        return $brand;
+    }
 }
-?>
