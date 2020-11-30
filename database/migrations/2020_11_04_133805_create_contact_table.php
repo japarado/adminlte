@@ -23,6 +23,8 @@ class CreateContactTable extends Migration
 			$table->string('contactable_type');
             $table->timestamps();
 			$table->softDeletes();
+
+			$table->index(['contactable_id', 'contactable_type']);
         });
     }
 

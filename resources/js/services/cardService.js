@@ -7,17 +7,27 @@ async function index()
 	return await axios.get(prefix);
 }
 
-async function importCards(cards)
+async function parseCsvData(cards) 
 {
 	const formData = new FormData();
-	formData.append("cards", cards)
+	formData.append("cards", cards);
 	return await axios.post(
-		`${prefix}/import`,
+		`${prefix}/parse-csv-data`,
 		formData,
 		{
-			headers: {'Content-Type': "multipart/form-data"}
+			headers: {"Content-Type": "multipart/form-data"}
 		}
 	);
 }
 
-export {index, importCards};
+async function assignBrands(cards)
+{
+	return await axios.post(`${prefix}/assign-brands`, {cards});
+}
+
+async function importCards(cards, fallbackBrandId = undefined)
+{
+	return await axios.post(`${prefix}/import`, {cards, fallback_brand_id: fallbackBrandId});
+}
+
+export {index, parseCsvData, assignBrands, importCards};

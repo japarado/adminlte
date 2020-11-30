@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Services\BrandService;
+use App\Http\Services\CardService;
 use App\Models\Brand;
-use App\Models\BrandCode;
 use App\Models\Card;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CardController extends Controller
 {
@@ -18,8 +16,12 @@ class CardController extends Controller
      */
     public function index()
     {
+		$cards = Card::with('contact')->paginate(config('constants.STANDARD_PAGE_SIZE'));
+		$brands = Brand::orderBy('name')->get();
+
         $context = [
-            'cards' => Card::paginate(config('constants.STANDARD_PAGE_SIZE'))
+			'cards' => $cards,
+			'brands' => $brands
         ];
 
         return view('cards.index', $context);
@@ -93,6 +95,12 @@ class CardController extends Controller
 
     public function import()
     {
-        return view('cards.import');
+		$brands = Brand::orderBy('name')->get();
+
+		$context = [
+			'brands' => $brands
+		];
+
+        return view('cards.import', $context);
     }
 }

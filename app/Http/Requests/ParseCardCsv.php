@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMergedCards extends FormRequest
+class ParseCardCsv extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class StoreMergedCards extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,21 @@ class StoreMergedCards extends FormRequest
     public function rules()
     {
         return [
-            //
+			'cards' => 'required|file|mimes:txt,csv',
         ];
     }
+
+	public function attributes(): array
+	{
+		return [
+			'cards' => 'Cards',
+		];
+	}
+
+	public function messages(): array
+	{
+		return [
+			'cards.required' => 'The Cards file is required',
+		];
+	}
 }

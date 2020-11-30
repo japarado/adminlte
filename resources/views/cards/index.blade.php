@@ -28,6 +28,7 @@
 											<th>ID</th>
 											<th>Code</th>
 											<th>Sync Status</th>
+											<th>Contact</th>
 											<th>Batch</th>
 											<th>Created At</th>
 										</tr>
@@ -38,6 +39,7 @@
 												<td>{{ $card->id }}</td>
 												<td>{{ $card->code }}</td>
 												<td>{{ $card->is_synced }}</td>
+												<td>{{ $card->contact ? $card->contact->full_name : "" }}</td>
 												<td>{{ $card->batch_id }}</td>
 												<td>{{ $card->created_at }}</td>
 											</tr>
