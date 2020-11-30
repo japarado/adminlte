@@ -17,16 +17,6 @@ class CardImport implements ToCollection, WithValidation
 {
     use SkipsFailures;
 
-    public function __construct()
-    {
-        $this->batch = Batch::create([
-            'import_type' => config('constants.IMPORT_TYPES.card'),
-            'user_id' => 1,
-        ]);
-    }
-
-    private Batch $batch;
-
     /**
     * @param Collection $collection
     */
