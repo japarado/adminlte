@@ -10,6 +10,7 @@ use App\Imports\CardImport;
 use App\Models\Batch;
 use App\Models\Brand;
 use App\Models\Card;
+use App\Models\Contact;
 use Error;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,11 +28,11 @@ class CardControllerJson extends Controller
 
     public function index()
     {
-		$cards = Card::paginate(config('constants.STANDARD_PAGE_SIZE'));
+        $cards = Card::paginate(config('constants.STANDARD_PAGE_SIZE'));
 
-		$context = [
-			'cards' => $cards,
-		];
+        $context = [
+            'cards' => $cards,
+        ];
 
         return response()->json($context);
     }
@@ -44,13 +45,13 @@ class CardControllerJson extends Controller
 
         foreach ($card_import_results as $card) {
             $named_card = [
-                    'abbott_code' => $card[0],
-                    'card_code' => $card[1],
-                    'first_name' => $card[2],
-                    'last_name' => $card[3],
-                    'phone_number' => $card[4],
-                    'email' => $card[5],
-                ];
+                'abbott_code' => $card[0],
+                'card_code' => $card[1],
+                'first_name' => $card[2],
+                'last_name' => $card[3],
+                'phone_number' => $card[4],
+                'email' => $card[5],
+            ];
             array_push($cards, $named_card);
         }
 
@@ -59,67 +60,72 @@ class CardControllerJson extends Controller
         ]);
     }
 
-	public function assignBrands(AssignBrands $request)
-	{
-		$cards = $request->input('cards');
+    public function assignBrands(AssignBrands $request)
+    {
+        $cards = $request->input('cards');
 
-		$brand_by_code = [];
+        $brand_by_code = [];
 
-		$brands = Brand::with('brandCodes')->get();
-		foreach($brands as $brand)
-		{
-			foreach($brand->brandCodes as $brand_code)
-			{
-				$brand_by_code[$brand_code->code] = [
-					'brand_name' => $brand->name,
-					'brand_id' => $brand->id
-				];
-			}
-		}
+        $brands = Brand::with('brandCodes')->get();
+        foreach ($brands as $brand) {
+            foreach ($brand->brandCodes as $brand_code) {
+                $brand_by_code[$brand_code->code] = [
+                    'brand_name' => $brand->name,
+                    'brand_id' => $brand->id
+                ];
+            }
+        }
 
-		$return_value = [];
+        $return_value = [];
 
-		foreach($cards as $card)
-		{
-			$brand_code = substr($card['card_code'], 0, 4);
-			if(array_key_exists($brand_code, $brand_by_code))
-			{
-				$card['brand_name'] = $brand_by_code[$brand_code]['brand_name'];
-				$card['brand_id'] = $brand_by_code[$brand_code]['brand_id'];
-				array_push($return_value, $card);
-			}
-		}
+        foreach ($cards as $card) {
+            $brand_code = substr($card['card_code'], 0, 4);
+            if (array_key_exists($brand_code, $brand_by_code)) {
+                $card['brand_name'] = $brand_by_code[$brand_code]['brand_name'];
+                $card['brand_id'] = $brand_by_code[$brand_code]['brand_id'];
+                array_push($return_value, $card);
+            }
+        }
 
-		return response()->json([
-			'cards' => $return_value
-		]);
-	}
+        return response()->json([
+            'cards' => $return_value
+        ]);
+    }
 
     public function import(ImportCards $request)
     {
-		$cards = $request->input('cards');
-		$fallback_brand_id = $request->input('fallback_brand_id');
+        $rows = $request->input('rows');
+        $fallback_brand_id = $request->input('fallback_brand_id');
 
-		return response()->json(Auth::user());
+        $batch = Batch::create([
+            'import_type' => config('constants.IMPORT_TYPES.card'),
+            'user_id' => 1,
+            'data' => $rows
+        ]);
 
-		$batch = Batch::create([
-			'import_type' => config('constants.IMPORT_TYPES.card'),
-			'user_id' => $request->user()->id
-		]);
+        foreach ($rows as $row) {
+            $card = Card::create([
+                'code' => $row['card_code'],
+                'abbott_code_id' => 1,
+                'brand_id' => $row['brand_id'],
+                'batch_id' => $batch->id
+            ]);
 
-		/* foreach($cards as $card) */
-		/* { */
-		/* 	$card = new Card([ */
-		/* 		'code' => $card->card_code, */
-		/* 		'abbott_code_id' => 1, */
-		/* 		'brand_id' => $card->brand_id */
-		/* 	]); */
-		/* 	$batch->cards()->save($card); */
-		/* } */
+            if ($row['first_name']) {
+                $contact = new Contact([
+                    'first_name' => $row['first_name'],
+                    'last_name' => $row['last_name'],
+                    'phone_number' => $row['phone_number'],
+                    'email' => $row['email'],
+                ]);
 
-		return response()->json([
-			'cards' => $cards,
-			'fallback_brand_id' => $fallback_brand_id
-		]);
+                $card->contact()->save($contact);
+            }
+        }
+
+        return response()->json([
+            'cards' => $rows,
+            'fallback_brand_id' => $fallback_brand_id
+        ]);
     }
 }
