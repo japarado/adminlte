@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware([])->group(function () {
     Route::prefix('cards')->group(function () {
         Route::post('assign-brands', [CardControllerJson::class, 'assignBrands'])->name('api.cards.assign-brands');
         Route::post('parse-csv-data', [CardControllerJson::class, 'parseCsvData'])->name('api.cards.parse-csv-data');
