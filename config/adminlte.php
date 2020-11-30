@@ -239,7 +239,7 @@ return [
         ['header' => 'main_navigation'],
         [
             'text' => 'Dashboard',
-            'url'  => '/home',
+            'url'  => '/',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
         [
