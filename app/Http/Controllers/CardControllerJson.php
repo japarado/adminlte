@@ -12,6 +12,7 @@ use App\Models\Brand;
 use App\Models\Card;
 use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 
@@ -98,6 +99,23 @@ class CardControllerJson extends Controller
     {
 		$cards = $request->input('cards');
 		$fallback_brand_id = $request->input('fallback_brand_id');
+
+		return response()->json(Auth::user());
+
+		$batch = Batch::create([
+			'import_type' => config('constants.IMPORT_TYPES.card'),
+			'user_id' => $request->user()->id
+		]);
+
+		/* foreach($cards as $card) */
+		/* { */
+		/* 	$card = new Card([ */
+		/* 		'code' => $card->card_code, */
+		/* 		'abbott_code_id' => 1, */
+		/* 		'brand_id' => $card->brand_id */
+		/* 	]); */
+		/* 	$batch->cards()->save($card); */
+		/* } */
 
 		return response()->json([
 			'cards' => $cards,

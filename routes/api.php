@@ -19,11 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('cards')->group(function() {
-	Route::post('assign-brands', [CardControllerJson::class, 'assignBrands'])->name('api.cards.assign-brands');
-	Route::post('parse-csv-data', [CardControllerJson::class, 'parseCsvData'])->name('api.cards.parse-csv-data');
-	Route::post('import', [CardControllerJson::class, "import"])->name('api.cards.import');
+Route::middleware('auth:api')->group(function () {
+    Route::prefix('cards')->group(function () {
+        Route::post('assign-brands', [CardControllerJson::class, 'assignBrands'])->name('api.cards.assign-brands');
+        Route::post('parse-csv-data', [CardControllerJson::class, 'parseCsvData'])->name('api.cards.parse-csv-data');
+        Route::post('import', [CardControllerJson::class, "import"])->name('api.cards.import');
+    });
+
+    Route::resource('cards', CardControllerJson::class, ['as' => 'api.cards'])->parameter('cards', 'id');
 });
-
-Route::resource('cards', CardControllerJson::class, ['as' => 'api.cards'])->parameter('cards', 'id');
-
