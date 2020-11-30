@@ -128,8 +128,6 @@ function handleUpdateTable(changes, source)
 			}
 		});
 	}
-
-	console.log(REVIEW_TABLE_DATA);
 }
 
 function triggerErrorModal()
