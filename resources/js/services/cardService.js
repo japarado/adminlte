@@ -27,7 +27,7 @@ async function assignBrands(cards)
 
 async function importCards(cards, fallbackBrandId = undefined)
 {
-	return await axios.post(`${prefix}/import`, {cards, fallback_brand_id: fallbackBrandId});
+	return await axios.post(`${prefix}/import`, {rows: cards, fallback_brand_id: fallbackBrandId});
 }
 
 export {index, parseCsvData, assignBrands, importCards};
