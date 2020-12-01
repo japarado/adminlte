@@ -30,9 +30,9 @@ class ImportCards extends FormRequest
             'rows.*.abbott_code' => 'required|max:4|alpha_num|exists:abbott_code,code',
             'rows.*.card_code' => 'required|min:14|alpha_num',
 
-            'rows.*.first_name' => 'required_with_all:cards.*.last_name,cards.*.phone_number|max:255',
-            'rows.*.last_name' => 'required_with_all:cards.*.first_name,cards.*.phone_number|max:255',
-            'rows.*.phone_number' => 'required_with_all:cards.*first_name,cards.*.last_name',
+            'rows.*.first_name' => 'required_with:rows.*.last_name,rows.*.phone_number|max:255',
+            'rows.*.last_name' => 'required_with:rows.*.first_name,rows.*.phone_number|max:255',
+            'rows.*.phone_number' => 'required_with:rows.*.first_name,rows.*.last_name',
             'rows.*.email' => 'nullable|email',
         ];
     }
