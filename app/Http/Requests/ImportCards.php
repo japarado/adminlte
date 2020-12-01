@@ -28,7 +28,7 @@ class ImportCards extends FormRequest
 			'fallback_brand_id' => 'required|numeric',
 
             'rows.*.abbott_code' => 'required|max:4|alpha_num|exists:abbott_code,code',
-            'rows.*.card_code' => 'required|min:14|alpha_num|unique:card,code',
+            'rows.*.card_code' => 'required|min:14|alpha_num',
 
             'rows.*.first_name' => 'required_with_all:cards.*.last_name,cards.*.phone_number|max:255',
             'rows.*.last_name' => 'required_with_all:cards.*.first_name,cards.*.phone_number|max:255',
