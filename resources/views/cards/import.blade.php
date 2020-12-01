@@ -13,6 +13,7 @@
 @section('content')
 	<div id="hidden-fields">
 		<input type="hidden" id="js-brands" value="{{ $brands }}">
+		<input type="hidden" id="js-validation-errors"></input>
 	</div>
 
 	<div id="hidden-html" class="d-none">
@@ -80,6 +81,32 @@
 						</div>
 					</form>
 				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="card card-danger d-none" id="js-error-card">
+				<div class="card-header">
+					<h3 class="card-title">Validation Errors</h3>
+				</div>
+				<div class="card-body">
+					<div class="row col-12">
+						<table class="table table-bordered" id="js-error-table">
+							<thead>
+								<tr>
+									<th style="width: 10px;">#</th>
+									<th>Row</th>
+									<th>Field</th>
+									<th>Message</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="card-footer"></div>
 			</div>
 		</div>
 	</div>
