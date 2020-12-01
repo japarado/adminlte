@@ -6,7 +6,7 @@
 
 require("./bootstrap");
 
-require("./pages/cards/import");
+// require("./pages/cards/import");
 
 // window.Vue = require('vue');
 
