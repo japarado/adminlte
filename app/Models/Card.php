@@ -12,9 +12,10 @@ class Card extends Model
     use SoftDeletes;
 
     protected $table = "card";
-    
+
     protected $fillable = ["code", "batch_id", "abbott_code_id", 'brand_id'];
 
+    // Relationships
     public function contact()
     {
         return $this->morphOne(Contact::class, 'contactable');
