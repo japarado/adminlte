@@ -212,15 +212,34 @@ document.getElementById("js-import-submit").addEventListener("click", handleClic
 async function handleClickImport(e)
 {
 	e.preventDefault();
-	try 
+
+	const choice = await Swal.fire({
+		title: "Are you sure you want to import this data?",
+		showConfirmButton: true,
+		showCancelButton: true,
+	});
+	if(choice.isConfirmed)
 	{
-		const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
-		document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
-		const response = await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
-	}
-	catch(error)
-	{
-		const response = error.response;
-		const data = error.response.data;
+		try 
+		{
+			const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
+			document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
+
+			const response = await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
+
+			await Swal.fire({
+				icon: "success",
+				title: "Import issued",
+				text: "Automatically Redirecting to batch review page in 3 seconds",
+				timer: 3000
+			});
+			// setTimeout(() => window.location = "/", 0);
+		}
+		catch(error)
+		{
+			const response = error.response;
+			const data = error.response.data;
+		}
 	}
 }
+

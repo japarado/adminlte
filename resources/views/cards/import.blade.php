@@ -3,7 +3,7 @@
 @section('title', 'Merge Cards')
 
 @section('content_header')
-    <h1>Import Cards</h1>
+	<h1>Import Cards</h1>
 @stop
 
 @section('content')
@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="row">
-		<div class="col-3">
+		<div class="col-12">
 			<div class="card card-primary">
 				<div class="card-header">
 					<h3 class="card-title">1. Import </h3>
@@ -34,12 +34,14 @@
 					</div>
 
 					<div class="card-footer">
-						<button class="btn btn-primary" id="js-parse-submit" type="submit">Merge</button>
+						<button class="btn btn-primary" id="js-parse-submit" type="submit">Parse</button>
 					</div>
 				</form>
 			</div>
 		</div>
-		<div class="col-9">
+	</div>
+	<div class="row">
+		<div class="col-12">
 			<div class="card card-info">
 				<div class="card-header">
 					<h3 class="card-title">2. Review and Validate Merged Data</h3>

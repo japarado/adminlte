@@ -9,39 +9,47 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Card extends Model
 {
     use HasFactory;
-	use SoftDeletes;
+    use SoftDeletes;
 
-	protected $table = "card";
-	
-	protected $fillable = ["code", "batch_id", "abbott_code_id", 'brand_id'];
+    protected $table = "card";
 
-	public function contact()
-	{
-		return $this->morphOne(Contact::class, 'contactable');
-	}
+    protected $fillable = ["code", "batch_id", "abbott_code_id", 'brand_id'];
 
-	public function cardImage()
-	{
-		return $this->hasOne(CardImage::class);
-	}
+    // Relationships
+    public function contact()
+    {
+        return $this->morphOne(Contact::class, 'contactable');
+    }
 
-	public function batch()
-	{
-		return $this->belongsTo(Batch::class);
-	}
+    public function cardImage()
+    {
+        return $this->hasOne(CardImage::class);
+    }
 
-	public function abbottCode()
-	{
-		return $this->belongsTo(AbbottCode::class);
-	}
+    public function batch()
+    {
+        return $this->belongsTo(Batch::class);
+    }
 
-	public function smsLog()
-	{
-		return $this->morphOne(SmsLog::class, 'loggable');
-	}
+    public function abbottCode()
+    {
+        return $this->belongsTo(AbbottCode::class);
+    }
 
-	public function getCodePrefixAttribute()
-	{
-		return substr($this->code, 0, 4);
-	}
+    public function smsLog()
+    {
+        return $this->morphOne(SmsLog::class, 'loggable');
+    }
+
+    // Accessors
+    public function getCodePrefixAttribute()
+    {
+        return substr($this->code, 0, 4);
+    }
+
+    // Scopes
+    public function scopeVacant($query)
+    {
+        return $query->doesntHave('contact')->orderBy('id');
+    }
 }

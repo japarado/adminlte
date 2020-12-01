@@ -16,6 +16,7 @@ class CreateBatchTable extends Migration
         Schema::create('batch', function (Blueprint $table) {
             $table->id();
 			$table->string('import_type');
+			$table->jsonb('data')->nullable();
 			$table->unsignedBigInteger('user_id');
             $table->timestamps();
 			$table->softDeletes();

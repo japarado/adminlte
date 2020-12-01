@@ -5,7 +5,7 @@ use App\Models\Brand;
 
 class BrandService
 {
-    public static function getBrandByCardCode(string $card_code) : ?Brand
+    public function findBrandByCardCode(string $card_code) : ?Brand
     {
         $brand_code = substr($card_code, 0, 4);
         $brand =  Brand::whereHas('brandCodes', function ($query) use ($brand_code) {
