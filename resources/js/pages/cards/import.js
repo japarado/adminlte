@@ -233,7 +233,7 @@ async function handleClickImport(e)
 				text: "Automatically Redirecting to batch review page in 3 seconds",
 				timer: 3000
 			});
-			setTimeout(() => window.location = "/", 0);
+			// setTimeout(() => window.location = "/", 0);
 		}
 		catch(error)
 		{
