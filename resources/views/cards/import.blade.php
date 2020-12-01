@@ -6,6 +6,10 @@
 	<h1>Import Cards</h1>
 @stop
 
+@section('js')
+	<script src="{{ asset('js/pages/cards/import.js') }}"></script>
+@stop
+
 @section('content')
 	<div id="hidden-fields">
 		<input type="hidden" id="js-brands" value="{{ $brands }}">
