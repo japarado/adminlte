@@ -14,6 +14,9 @@ require("dotenv").config();
 
 mix
 	.js("resources/js/app", "public/js")
+
+	.js('resources/js/pages/cards/import', 'public/js/pages/cards/')
+
 	.sass("resources/sass/app.scss", "public/css")
 	.sourceMaps(true, "source-map")
 	.browserSync({
