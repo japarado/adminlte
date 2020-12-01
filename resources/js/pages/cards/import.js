@@ -16,8 +16,6 @@ document.getElementById("js-parse-submit").addEventListener("click", (e) =>
 {
 	e.preventDefault();
 	domClearCardsErrors();
-
-	initializeReviewTable();
 	REVIEW_TABLE_DATA = [];
 	initializeReviewTable();
 
@@ -220,6 +218,9 @@ async function handleClickImport(e)
 	});
 	if(choice.isConfirmed)
 	{
+		domClearValidationErrors();
+		domHideErrorsCard();
+
 		try 
 		{
 			const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
@@ -238,8 +239,85 @@ async function handleClickImport(e)
 		catch(error)
 		{
 			const response = error.response;
-			const data = error.response.data;
+			const errors = error.response.data.errors;
+			Swal.fire({
+				icon: "error",
+				title: "Validation Errors",
+				text: "View the table below to view the list of validation errors"
+			});
+			domSetValidationErrors(errors, true);
 		}
 	}
 }
 
+function domSetValidationErrors(errors, emitEvent = false)
+{
+	const errorList = [];
+	Object.keys(errors).forEach((error) =>
+	{
+		const [fieldType, row, field] = error.split(".");
+		const errorMessage = errors[error][0];
+		const customizedMessage = errorMessage.replace(`The ${fieldType}.${row}.${field}`, field);
+		errorList.push({row, field, message: customizedMessage});
+	});
+
+	document.getElementById("js-validation-errors").value = JSON.stringify(errorList);
+
+	if(emitEvent)
+	{
+		document.getElementById("js-validation-errors").dispatchEvent(new Event("change"));
+	}
+}
+
+function domClearValidationErrors(emitEvent = false)
+{
+	document.getElementById("js-validation-errors").value = "";
+	if(emitEvent)
+	{
+		document.getElementById("js-validation-errors").dispatchEvent(new Event("change"));
+	}
+}
+
+document.getElementById("js-validation-errors").addEventListener("change", handleUpdateValidationErrors);
+function handleUpdateValidationErrors(e)
+{
+	domHideErrorsCard();
+	const errors = JSON.parse(e.target.value);
+	if(errors.length > 0)
+	{
+		domShowErrorsCard(errors);
+	}
+	else 
+	{
+		domHideErrorsCard(errors);
+	}
+}
+
+function domHideErrorsCard()
+{
+	document.getElementById("js-error-card").classList.add("d-none");
+	document.getElementById("js-error-table").getElementsByTagName("tbody")[0].innerHTML = null;
+}
+
+function domShowErrorsCard(errors)
+{
+	document.getElementById("js-error-card").classList.remove("d-none");
+	const table = document.getElementById("js-error-table");
+
+	errors.forEach((error, index) => 
+	{
+		const row = table.getElementsByTagName('tbody')[0].insertRow();
+
+		const indexCell = row.insertCell();
+		indexCell.innerText = index;
+
+		const rowCell = row.insertCell();
+		rowCell.innerText = error.row;
+
+		const fieldCell = row.insertCell();
+		fieldCell.innerText = error.field;
+
+		const messageCell = row.insertCell();
+		messageCell.innerText = error.message;
+	});
+}
