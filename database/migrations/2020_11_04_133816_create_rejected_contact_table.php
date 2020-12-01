@@ -17,7 +17,7 @@ class CreateRejectedContactTable extends Migration
             $table->id();
 			$table->string('first_name');
 			$table->string('last_name');
-			$table->string('phone_number')->unique();
+			$table->string('phone_number');
 			$table->string('email')->nullable();
 			$table->unsignedBigInteger('batch_id');
             $table->timestamps();
