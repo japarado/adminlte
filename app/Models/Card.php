@@ -40,8 +40,15 @@ class Card extends Model
         return $this->morphOne(SmsLog::class, 'loggable');
     }
 
+    // Accessors
     public function getCodePrefixAttribute()
     {
         return substr($this->code, 0, 4);
+    }
+
+    // Scopes
+    public function scopeVacant($query)
+    {
+        return $query->doesntHave('contact')->orderBy('id');
     }
 }
