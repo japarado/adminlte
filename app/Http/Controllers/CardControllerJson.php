@@ -7,13 +7,11 @@ use App\Http\Requests\ImportCards;
 use App\Http\Requests\ParseCardCsv;
 use App\Http\Services\CardService;
 use App\Imports\CardImport;
+use App\Jobs\ProcessCards;
 use App\Models\Batch;
 use App\Models\Brand;
 use App\Models\Card;
 use App\Models\Contact;
-use Error;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 
@@ -114,25 +112,7 @@ class CardControllerJson extends Controller
             'data' => $rows
         ]);
 
-        foreach ($rows as $row) {
-            $card = Card::create([
-                'code' => $row['card_code'],
-                'abbott_code_id' => 1,
-                'brand_id' => $row['brand_id'],
-                'batch_id' => $batch->id
-            ]);
-
-            if ($row['first_name']) {
-                $contact = new Contact([
-                    'first_name' => $row['first_name'],
-                    'last_name' => $row['last_name'],
-                    'phone_number' => $row['phone_number'],
-                    'email' => $row['email'],
-                ]);
-
-                $card->contact()->save($contact);
-            }
-        }
+		ProcessCards::dispatch($rows, $fallback_brand_id, $batch);
 
         return response()->json([
             'cards' => $rows,
