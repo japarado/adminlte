@@ -212,42 +212,38 @@ async function handleClickImport(e)
 	e.preventDefault();
 
 	const choice = await Swal.fire({
-		title: "Are you sure you want to import this data?",
+		icon: "question",
+		title: "Import now?",
 		showConfirmButton: true,
 		showCancelButton: true,
+		showLoaderOnConfirm: true,
+		allowOutsideClick: false,
+		preConfirm: async(x) => 
+		{
+			domClearValidationErrors();
+			domHideErrorsCard();
+			try 
+			{
+				const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
+				document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
+				await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
+				Swal.fire({
+					icon: "success",
+					text: "Import successfully issued",
+				});
+			}
+			catch(error)
+			{
+				const errors = error.response.data.errors;
+				Swal.fire({
+					icon: "error",
+					title: "Validation errors detected",
+					text: "Review the errors listed on the table below and reattempt the import"
+				});
+				domSetValidationErrors(errors, true);
+			}
+		}
 	});
-	if(choice.isConfirmed)
-	{
-		domClearValidationErrors();
-		domHideErrorsCard();
-
-		try 
-		{
-			const fallbackBrandId = document.getElementById("js-fallback-brand-id").value;
-			document.getElementById("js-fallback-brand-id").dispatchEvent(new Event("change"));
-
-			const response = await cardImport(REVIEW_TABLE_DATA, fallbackBrandId);
-
-			await Swal.fire({
-				icon: "success",
-				title: "Import issued",
-				text: "Automatically Redirecting to batch review page in 3 seconds",
-				timer: 3000
-			});
-			// setTimeout(() => window.location = "/", 0);
-		}
-		catch(error)
-		{
-			const response = error.response;
-			const errors = error.response.data.errors;
-			Swal.fire({
-				icon: "error",
-				title: "Validation Errors",
-				text: "View the table below to view the list of validation errors"
-			});
-			domSetValidationErrors(errors, true);
-		}
-	}
 }
 
 function domSetValidationErrors(errors, emitEvent = false)
@@ -306,7 +302,7 @@ function domShowErrorsCard(errors)
 
 	errors.forEach((error, index) => 
 	{
-		const row = table.getElementsByTagName('tbody')[0].insertRow();
+		const row = table.getElementsByTagName("tbody")[0].insertRow();
 
 		const indexCell = row.insertCell();
 		indexCell.innerText = index;
