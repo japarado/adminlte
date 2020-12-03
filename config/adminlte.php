@@ -242,6 +242,11 @@ return [
             'url'  => '/',
             'icon' => 'fas fa-fw fa-tachometer-alt',
         ],
+		[
+            'text' => 'Batches',
+            'url'  => '/batches',
+            'icon' => 'fas fa-fw fa-archive',
+		],
         [
             'text' => 'Cards',
             'icon' => 'fas fa-fw fa-credit-card',

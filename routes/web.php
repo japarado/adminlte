@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BatchController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
@@ -36,4 +37,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('contacts', ContactController::class)->parameter('contacts', 'id');
 
     Route::resource('rejected-contacts', RejectedContactController::class)->parameter('rejected-contacts', 'id');
+
+	Route::resource('batches', BatchController::class)->parameter('batches', 'id');
 });
