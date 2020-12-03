@@ -38,5 +38,5 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('rejected-contacts', RejectedContactController::class)->parameter('rejected-contacts', 'id');
 
-	Route::resouce('batches', BatchController::class)->parameter('batches', 'id');
+	Route::resource('batches', BatchController::class)->parameter('batches', 'id');
 });
