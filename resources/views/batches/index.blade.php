@@ -24,6 +24,7 @@
 											<th>Type</th>
 											<th>Issued By</th>
 											<th>Created At</th>
+											<th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -33,6 +34,16 @@
 												<td>{{ $batch->import_type }}</td>
 												<td>{{ $batch->user->full_name }}</td>
 												<td>{{ $batch->created_at }}</td>
+												<td class="project-actions text-right">
+													<a class="btn btn-primary btn-sm" href="{{ route('batches.show', $batch->id) }}">
+														<i class="fas fa-folder"></i>
+														View
+													</a>
+													<a class="btn btn-danger btn-sm" href="{{ route('batches.show', $batch->id) }}">
+														<i class="fas fa-trash"></i>
+														Delete
+													</a>
+												</td>
 											</tr>
 										@endforeach
 									</tbody>
