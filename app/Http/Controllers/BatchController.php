@@ -14,7 +14,13 @@ class BatchController extends Controller
      */
     public function index()
     {
-		$batches = Batch::with('user')->orderBy('id', 'desc')->paginate(config('constants.STANDARD_PAGE_SIZE'));
+		$batches = Batch::with('user')
+			->withCount(['cards' => function($query) {
+				$query->withCount('contact');
+			}])
+			->withCount('vouchers')
+			->orderBy('id', 'desc')
+			->paginate(config('constants.STANDARD_PAGE_SIZE'));
 
 		$context = [
 			'batches' => $batches
