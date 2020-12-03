@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Batch;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
@@ -13,7 +14,13 @@ class BatchController extends Controller
      */
     public function index()
     {
-        //
+		$batches = Batch::with('user')->orderBy('id', 'desc')->paginate(config('constants.STANDARD_PAGE_SIZE'));
+
+		$context = [
+			'batches' => $batches
+		];
+
+		return view('batches.index', $context);
     }
 
     /**
