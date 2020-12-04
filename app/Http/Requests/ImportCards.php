@@ -1,7 +1,9 @@
 <?php 
 namespace App\Http\Requests;
 
+use App\Models\AbbottCode;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ImportCards extends FormRequest
 {
@@ -22,11 +24,12 @@ class ImportCards extends FormRequest
      */
     public function rules()
     {
+		$abbott_codes = AbbottCode::select('code')->pluck('code');
         return [
 			'rows' => 'required',
 			'fallback_brand_id' => 'required|numeric',
 
-            'rows.*.abbott_code' => 'required|max:4|alpha_num|exists:abbott_code,code',
+            'rows.*.abbott_code' => ['required', Rule::in($abbott_codes)],
             'rows.*.card_code' => 'required|min:14|alpha_num',
 
             'rows.*.first_name' => 'required_with:rows.*.last_name,rows.*.phone_number|max:255',

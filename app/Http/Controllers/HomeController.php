@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Batch;
-use App\Models\Brand;
 use App\Models\Card;
-use App\Models\RejectedContact;
 use App\Models\Voucher;
-use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
