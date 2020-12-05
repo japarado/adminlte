@@ -13,5 +13,5 @@ mariadb -u root --execute="USE emissary; TRUNCATE rejected_contact";
 mariadb -u root --execute="USE emissary; SET FOREIGN_KEY_CHECKS=0; TRUNCATE card; SET FOREIGN_KEY_CHECKS=1";
 mariadb -u root --execute="USE emissary; SET FOREIGN_KEY_CHECKS=0; TRUNCATE voucher; SET FOREIGN_KEY_CHECKS=1";
 mariadb -u root --execute="USE emissary; SET FOREIGN_KEY_CHECKS=0; TRUNCATE batch; SET FOREIGN_KEY_CHECKS=1";
-mariadb -u root --execute="USE emissary; TRUNCATE jobs";
-mariadb -u root --execute="USE emissary; TRUNCATE failed_jobs";
+mariadb -u root --execute="USE emissary; TRUNCATE job";
+mariadb -u root --execute="USE emissary; TRUNCATE failed_job";
