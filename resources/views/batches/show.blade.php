@@ -22,3 +22,7 @@
 		</div>
 	</div>
 @stop
+
+@section('js')
+	<script src="{{ asset('js/pages/batches/show.js') }}"></script>
+@endsection
