@@ -35,18 +35,6 @@ class Batch extends Model
 		return $this->hasMany(Voucher::class);
 	}
 
-	public function items()
-	{
-		if($this->import_type === 'VOUCHER')
-		{
-			return $this->hasMany(Voucher::class);
-		}
-		else
-		{
-			return $this->hasMany(Card::class);
-		}
-	}
-
 	public function rejectedContacts()
 	{
 		return $this->hasMany(RejectedContact::class);
