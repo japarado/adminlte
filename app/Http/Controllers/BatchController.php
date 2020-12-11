@@ -14,19 +14,19 @@ class BatchController extends Controller
      */
     public function index()
     {
-		$batches = Batch::with('user')
-			->withCount(['cards' => function($query) {
-				$query->withCount('contact');
-			}])
-			->withCount('vouchers')
-			->orderBy('id', 'desc')
-			->paginate(config('constants.STANDARD_PAGE_SIZE'));
+        $batches = Batch::with('user')
+            ->withCount(['cards' => function ($query) {
+                $query->withCount('contact');
+            }])
+            ->withCount('vouchers')
+            ->orderBy('id', 'desc')
+            ->paginate(config('constants.STANDARD_PAGE_SIZE'));
 
-		$context = [
-			'batches' => $batches
-		];
+        $context = [
+            'batches' => $batches
+        ];
 
-		return view('batches.index', $context);
+        return view('batches.index', $context);
     }
 
     /**
