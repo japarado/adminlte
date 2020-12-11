@@ -7,6 +7,10 @@
 @stop
 
 @section('content')
+	<div id="hidden-fields">
+		<input type="hidden" id="js-import-data" value="{{ json_encode($batch->data) }}">
+	</div>
+
 	<div class="row">
 		<div class="col-12">
 			<div class="card">
@@ -15,7 +19,9 @@
 				</div>
 				<div class="card-body">
 					<div class="row">
-						batch show page
+						<div class="col-md-12">
+							<div id="js-import-data-table"></div>
+						</div>
 					</div>
 				</div>
 			</div>
