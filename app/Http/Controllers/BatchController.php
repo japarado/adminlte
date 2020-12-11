@@ -58,14 +58,12 @@ class BatchController extends Controller
      */
     public function show($id)
     {
-		$batch = Batch::find($id);
+        $batch = Batch::find($id);
+        $context = [
+            'batch' => $batch,
+        ];
 
-		$context = [
-			'batch' => $batch,
-		];
-
-		return view('batches.show', $context);
-
+        return view('batches.show', $context);
     }
 
     /**
