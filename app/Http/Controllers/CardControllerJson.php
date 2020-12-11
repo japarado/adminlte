@@ -11,9 +11,7 @@ use App\Jobs\ProcessCards;
 use App\Models\Batch;
 use App\Models\Brand;
 use App\Models\Card;
-use App\Models\Contact;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Validators\ValidationException;
 
 class CardControllerJson extends Controller
 {
