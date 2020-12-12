@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Batch;
+use App\Models\CardBatch;
+use App\Models\VoucherBatch;
 use Illuminate\Http\Request;
 
 class BatchController extends Controller
@@ -14,19 +16,19 @@ class BatchController extends Controller
      */
     public function index()
     {
-		$batches = Batch::with('user')
-			->withCount(['cards' => function($query) {
-				$query->withCount('contact');
-			}])
-			->withCount('vouchers')
-			->orderBy('id', 'desc')
-			->paginate(config('constants.STANDARD_PAGE_SIZE'));
+        $batches = Batch::with('user')
+            ->withCount(['cards' => function ($query) {
+                $query->withCount('contact');
+            }])
+            ->withCount('vouchers')
+            ->orderBy('id', 'desc')
+            ->paginate(config('constants.STANDARD_PAGE_SIZE'));
 
-		$context = [
-			'batches' => $batches
-		];
+        $context = [
+            'batches' => $batches
+        ];
 
-		return view('batches.index', $context);
+        return view('batches.index', $context);
     }
 
     /**
@@ -58,7 +60,40 @@ class BatchController extends Controller
      */
     public function show($id)
     {
-        //
+		$plain_batch = Batch::find($id);
+
+		if($plain_batch->import_type === config('constants.IMPORT_TYPES.card'))
+		{
+			$batch = CardBatch::with(['cards' => function($query) {
+				$query->withCount('contact');
+			}])->withCount('cards')->find($id);
+		}
+		else 
+		{
+			$batch = VoucherBatch::with('vouchers.contact')->find($id);
+		}
+
+		$batch->contact_count = 0;
+
+		foreach($batch->cards as $card)
+		{
+			$batch->contact_count += $card->contact_count;
+		}
+
+		$import_file_card_count = count($batch->data['rows']);
+
+		$card_insertion_rate = round((count($batch->cards) / count($batch->data['rows'])) * 100, 2);
+		$contact_insertion_rate = round(($batch->contact_count / $batch->data['contact_count']) * 100, 2);
+		
+        $context = [
+            'batch' => $batch,
+			'card_insertion_rate' => $card_insertion_rate,
+			'contact_insertion_rate' => $contact_insertion_rate,
+			'import_file_card_count' => $import_file_card_count,
+			'import_type' => ucfirst(strtolower($batch->import_type))
+        ];
+
+        return view('batches.show', $context);
     }
 
     /**

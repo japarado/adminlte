@@ -11,9 +11,7 @@ use App\Jobs\ProcessCards;
 use App\Models\Batch;
 use App\Models\Brand;
 use App\Models\Card;
-use App\Models\Contact;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Validators\ValidationException;
 
 class CardControllerJson extends Controller
 {
@@ -106,10 +104,23 @@ class CardControllerJson extends Controller
         $rows = $request->input('rows');
         $fallback_brand_id = $request->input('fallback_brand_id');
 
+		$reducer_callback = function($carry, $item) {
+			if(array_key_exists('first_name', $item))
+			{
+				$carry += 1;
+			}
+			return $carry;
+		};
+
+		$contact_count = array_reduce($rows, $reducer_callback, 0);
+
         $batch = Batch::create([
             'import_type' => config('constants.IMPORT_TYPES.card'),
             'user_id' => 1,
-            'data' => $rows
+			'data' => [
+				'rows' => $rows,
+				'contact_count' => $contact_count
+			]
         ]);
 
 		ProcessCards::dispatch($rows, $fallback_brand_id, $batch);
