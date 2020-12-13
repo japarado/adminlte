@@ -3,7 +3,8 @@
 @section('title', "Batches - {$batch->id}")
 
 @section('content_header')
-    <h1>Batches</h1>
+	<h1>Batch #{{ $batch->id }}</h1>
+	<h6>{{ $batch->created_at }}</h6>
 @stop
 
 @section('content')
@@ -53,6 +54,18 @@
 							<div id="js-import-data-table"></div>
 						</div>
 					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-12">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Rejected Contacts</h3>
+				</div>
+				<div class="card-body">
 				</div>
 			</div>
 		</div>
