@@ -64,17 +64,20 @@ class BatchController extends Controller
 
 		if($plain_batch->import_type === config('constants.IMPORT_TYPES.card'))
 		{
-			$batch = CardBatch::with(['cards' => function($query) {
+			$batch_query = CardBatch::with(['cards' => function($query) {
 				$query->withCount('contact');
-			}])->withCount('cards')->find($id);
+			}]);
 		}
 		else 
 		{
-			$batch = VoucherBatch::with('vouchers.contact')->find($id);
+			$batch_query = VoucherBatch::with(['vouchers' => function($query) {
+				$query->withCount('contact');
+			}]);
 		}
 
-		$batch->contact_count = 0;
+		$batch = $batch_query->with('rejectedContacts')->find($id);
 
+		$batch->contact_count = 0;
 		foreach($batch->cards as $card)
 		{
 			$batch->contact_count += $card->contact_count;
@@ -90,7 +93,7 @@ class BatchController extends Controller
 			'card_insertion_rate' => $card_insertion_rate,
 			'contact_insertion_rate' => $contact_insertion_rate,
 			'import_file_card_count' => $import_file_card_count,
-			'import_type' => ucfirst(strtolower($batch->import_type))
+			'import_type' => ucfirst(strtolower($batch->import_type)),
         ];
 
         return view('batches.show', $context);
