@@ -33,6 +33,6 @@ class VoucherBatch extends Model
 
 	public function rejectedContacts()
 	{
-		return $this->hasMany(RejectedContact::class);
+		return $this->hasMany(RejectedContact::class, 'batch_id');
 	}
 }
