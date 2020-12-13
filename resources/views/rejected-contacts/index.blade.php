@@ -17,7 +17,7 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="table-responsive">
-								@include('rejected-contacts.parts.table')
+								<x-rejected-contact-table :rejected-contacts="$rejected_contacts"/>
 							</div>
 						</div>
 					</div>
