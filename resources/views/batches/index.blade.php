@@ -39,10 +39,6 @@
 														<i class="fas fa-folder"></i>
 														View
 													</a>
-													<a class="btn btn-danger btn-sm" href="{{ route('batches.show', $batch->id) }}">
-														<i class="fas fa-trash"></i>
-														Delete
-													</a>
 												</td>
 											</tr>
 										@endforeach
