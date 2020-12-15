@@ -60,40 +60,10 @@ class BatchController extends Controller
      */
     public function show($id)
     {
-		$plain_batch = Batch::find($id);
-
-		if($plain_batch->import_type === config('constants.IMPORT_TYPES.card'))
-		{
-			$batch_query = CardBatch::with(['cards' => function($query) {
-				$query->withCount('contact');
-			}]);
-		}
-		else 
-		{
-			$batch_query = VoucherBatch::with(['vouchers' => function($query) {
-				$query->withCount('contact');
-			}]);
-		}
-
-		$batch = $batch_query->with('rejectedContacts')->find($id);
-
-		$batch->contact_count = 0;
-		foreach($batch->cards as $card)
-		{
-			$batch->contact_count += $card->contact_count;
-		}
-
-		$import_file_card_count = count($batch->data['rows']);
-
-		$card_insertion_rate = round((count($batch->cards) / count($batch->data['rows'])) * 100, 2);
-		$contact_insertion_rate = round(($batch->contact_count / $batch->data['contact_count']) * 100, 2);
+		$batch = Batch::find($id);
 		
         $context = [
             'batch' => $batch,
-			'card_insertion_rate' => $card_insertion_rate,
-			'contact_insertion_rate' => $contact_insertion_rate,
-			'import_file_card_count' => $import_file_card_count,
-			'import_type' => ucfirst(strtolower($batch->import_type)),
         ];
 
         return view('batches.show', $context);
